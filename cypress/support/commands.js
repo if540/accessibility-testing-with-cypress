@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("getWithMessage", (selector, message, options = {}) => {
+  return cy
+    .get(selector, options)
+    .should("exist")
+    .then(($el) => {
+      if ($el.length === 0) {
+        throw new Error(message || `❌ 找不到元素: ${selector}`);
+      }
+      return $el;
+    });
+});
