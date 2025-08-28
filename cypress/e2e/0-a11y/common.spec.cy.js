@@ -43,11 +43,49 @@ describe("全站通用 a11y 檢測", () => {
       pages.forEach((page) => {
         cy.visit(`${BASE_URL}${page}`);
         cy.get('[style*="font-size"]').then((els) => {
+          const errors = [];
           els.each((i, el) => {
             const styleAttr = el.getAttribute('style');
             const hasPx = styleAttr && /font-size\s*:\s*[\d.]+px/.test(styleAttr);
-            expect(hasPx, 'style 屬性包含 font-size 且為 px 單位').to.be.false;
+            
+            if (hasPx) {
+              // 收集詳細的元素資訊
+              const elementInfo = {
+                tagName: el.tagName.toLowerCase(),
+                className: el.className || '',
+                id: el.id || '',
+                textContent: el.textContent ? el.textContent.trim().substring(0, 100) : '',
+                style: styleAttr,
+                outerHTML: el.outerHTML.substring(0, 200)
+              };
+              
+              errors.push(elementInfo);
+              
+              // 在 Cypress 日誌中記錄詳細資訊
+              cy.addTestContext(`❌ 發現使用 px 字型單位的元素 #${i + 1}:`);
+              cy.addTestContext(`   標籤: <${elementInfo.tagName}>`);
+              if (elementInfo.id) cy.addTestContext(`   ID: #${elementInfo.id}`);
+              if (elementInfo.className) cy.addTestContext(`   Class: .${elementInfo.className}`);
+              cy.addTestContext(`   Style: ${elementInfo.style}`);
+              if (elementInfo.textContent) cy.addTestContext(`   內容: "${elementInfo.textContent}"`);
+              cy.addTestContext(`   HTML: ${elementInfo.outerHTML}...`);
+              cy.addTestContext('');
+            }
           });
+          
+          // 如果有錯誤，在 console 中輸出完整資訊
+          if (errors.length > 0) {
+            console.log('🚨 發現使用 px 字型單位的元素詳細資訊:', errors);
+          }
+          
+          // 使用自定義錯誤訊息顯示所有問題元素
+          const errorMessage = errors.length > 0 
+            ? `發現 ${errors.length} 個元素使用 px 字型單位:\n${errors.map((err, idx) => 
+                `${idx + 1}. <${err.tagName}${err.id ? ` id="${err.id}"` : ''}${err.className ? ` class="${err.className}"` : ''}> - ${err.style}`
+              ).join('\n')}`
+            : '';
+            
+          expect(errors.length, errorMessage).to.equal(0);
         });
       });
     });
