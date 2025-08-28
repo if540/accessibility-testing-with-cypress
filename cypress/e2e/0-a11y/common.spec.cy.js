@@ -3,7 +3,7 @@
 /* eslint-disable jest/valid-expect, no-unused-expressions */
 
 const BASE_URL = "http://localhost:3000";
-const pages = ["/"];
+const pages = ["/", "/about"];
 
 describe("全站通用 a11y 檢測", () => {
   describe("全站通用 a11y 檢測 (H1，違反 HM1130104E)", () => {
@@ -84,7 +84,7 @@ describe("全站通用 a11y 檢測", () => {
                 `${idx + 1}. <${err.tagName}${err.id ? ` id="${err.id}"` : ''}${err.className ? ` class="${err.className}"` : ''}> - ${err.style}`
               ).join('\n')}`
             : '';
-            
+
           expect(errors.length, errorMessage).to.equal(0);
         });
       });

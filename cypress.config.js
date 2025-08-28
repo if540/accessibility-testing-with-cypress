@@ -13,6 +13,10 @@ module.exports = defineConfig({
     html: true,
     json: true,
     reportFilename: 'accessibility-report',
+    showPassed: true,
+    showSkipped: false,
+    code: false,
+    addContext: true,
   },
   e2e: {
     setupNodeEvents(on, config) {

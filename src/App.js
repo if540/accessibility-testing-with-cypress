@@ -1,4 +1,7 @@
-function App() {
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import About from './About';
+
+function Home() {
   return (
     <div className="row">
         <div className="col-md-5 mx-auto">
@@ -28,7 +31,7 @@ function App() {
                     <label for="exampleInputPassword2" className="form-label">Confirm Password</label>
                     <input type="password" className="form-control" id="exampleInputPassword"/> {/* change exampleInputPassword to exampleInputPassword2 */}
                 </div>
-                <label for="form-check-label" className="form-check-label mb-3">I agree to the  <a href="/">terms and conditions</a> </label>
+                <label for="form-check-label" className="form-check-label mb-3">I agree to the  <Link to="/about">terms and conditions</Link> </label>
                 <div className="form-check">
                     <input className="form-check-input" aria-label="test" type="checkbox" value="" id="flexCheckChecked1"/>
                     <label className="form-check-label" for="flexCheckChecked1">
@@ -43,9 +46,40 @@ function App() {
                 </div>
                 <button type="submit" className="btn btn-primary text-primary">Submit</button> {/* delete text-primary */}
             </form>
+            <div className="text-center mt-3">
+              <Link to="/about" className="btn btn-secondary">
+                前往關於我們頁面
+              </Link>
+            </div>
         </div>
 
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <div className="container-fluid">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
+          <div className="container">
+            <Link className="navbar-brand" to="/">
+              <img src="/logo.png" alt="Logo" width="30" height="30" className="me-2"/>
+              我的網站
+            </Link>
+            <div className="navbar-nav">
+              <Link className="nav-link" to="/">首頁</Link>
+              <Link className="nav-link" to="/about">關於我們</Link>
+            </div>
+          </div>
+        </nav>
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

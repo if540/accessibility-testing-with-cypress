@@ -35,3 +35,22 @@ Cypress.Commands.add("getWithMessage", (selector, message, options = {}) => {
       return $el;
     });
 });
+
+// 添加自定義命令來記錄訪問的 URL
+Cypress.Commands.add('visitWithLogging', (url) => {
+  cy.visit(url).then(() => {
+    cy.url().then((currentUrl) => {
+      cy.logPageUrl(`🌐 測試頁面: ${currentUrl}`);
+      cy.log(`正在測試頁面: ${currentUrl}`);
+    });
+  });
+});
+
+// 記錄頁面 URL 的自定義命令
+Cypress.Commands.add('logPageUrl', (message) => {
+  // 在 Cypress 測試運行器中顯示
+  cy.log(message);
+  
+  // 將訊息記錄到 console，這樣會出現在報告中
+  cy.task('log', message);
+});
