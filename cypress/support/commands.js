@@ -117,11 +117,22 @@ Cypress.Commands.add('afterRequest', (page, response, onSuccess) => {
   if (response.status >= 200 && response.status < 400) {
     cy.visit(page, { failOnStatusCode: false, timeout: 10000 });
     cy.title().then(title => { cy.addTestContext(`📝 頁面標題: ${title}`); });
+    
+    // 添加頁面資訊到上下文
+    cy.url().then(url => { cy.addTestContext(`🌐 實際 URL: ${decodeURI(url)}`); });
+    
     cy.injectAxe();
     cy.waitForJQueryAjax();
+    
+    // 添加頁面載入完成的時間戳
+    // cy.addTestContext(`⏰ 頁面載入完成時間: ${new Date().toISOString()}`);
+    
     onSuccess && onSuccess(page, response);
   } else {
     cy.addTestContext(`❌ 頁面狀態: 無效網址 (HTTP ${response.status})`);
+    if (response.statusText) {
+      cy.addTestContext(`📄 狀態描述: ${response.statusText}`);
+    }
     // 使用 this.skip() 跳過測試
     // 注意：必須用 function(){} 形式的 it 才能用 this.skip()
     // 這裡 Cypress 會自動綁定正確的 this
@@ -129,3 +140,69 @@ Cypress.Commands.add('afterRequest', (page, response, onSuccess) => {
     return cy.then(function() { this.skip(); });
   }
 });
+
+/**
+ * 自定義命令：顯示無障礙問題詳細資訊
+ * @param {Array} violations - 無障礙問題陣列
+ * @example
+ * cy.checkA11yViolationsDetails(violations);
+ */
+Cypress.Commands.add('checkA11yViolationsDetails', (violations, testName) => {
+  if (violations.length > 0) {
+
+    cy.addTestContext(`🚨 發現 ${violations.length} 個${testName}問題:`);
+    violations.forEach((violation, idx) => {
+      cy.addTestContext(`${idx + 1}. ${violation.description}`);
+      cy.addTestContext(`   影響等級: ${violation.impact}`);
+      cy.addTestContext(`   標準: ${violation.tags.join(', ')}`);
+      cy.addTestContext(`   幫助資訊: ${violation.helpUrl}`);
+      violation.nodes.forEach((node, nodeIdx) => {
+        cy.addTestContext(`   問題元素 ${nodeIdx + 1}: ${node.target.join(', ')}`);
+        if (node.failureSummary) {
+          cy.addTestContext(`   具體問題: ${node.failureSummary}`);
+        }
+        if (node.any && node.any.length > 0) {
+          node.any.forEach((check) => {
+            if (check.data) {
+              cy.addTestContext(`   檢測結果: ${JSON.stringify(check.data)}`);
+            }
+          });
+        }
+      });
+      cy.addTestContext(''); // 空行分隔
+    });
+  }
+});
+
+/**
+ * 自定義命令：增強的錯誤捕獲和報告
+ */
+// Cypress.Commands.add('captureFailureDetails', (testName, error) => {
+//   cy.addTestContext(`❌ 測試失敗: ${testName}`);
+//   cy.addTestContext(`🐛 錯誤訊息: ${error.message}`);
+  
+//   if (error.stack) {
+//     cy.addTestContext(`📊 堆疊追蹤:`);
+//     const stackLines = error.stack.split('\n').slice(0, 5); // 只顯示前5行
+//     stackLines.forEach(line => {
+//       cy.addTestContext(`   ${line.trim()}`);
+//     });
+//   }
+  
+//   // 截圖
+//   cy.screenshot(`failure-${testName}-${Date.now()}`, { 
+//     capture: 'fullPage',
+//     overwrite: true 
+//   });
+  
+//   // 收集頁面資訊
+//   cy.url().then(url => { cy.addTestContext(`🌐 失敗時的 URL: ${decodeURI(url)}`); });
+//   cy.title().then(title => { cy.addTestContext(`📝 失敗時的頁面標題: ${title}`); });
+  
+//   // 收集瀏覽器控制台錯誤
+//   cy.window().then(win => {
+//     if (win.console && win.console.error) {
+//       cy.addTestContext(`🖥️ 瀏覽器控制台可能有錯誤，請檢查開發者工具`);
+//     }
+//   });
+// });

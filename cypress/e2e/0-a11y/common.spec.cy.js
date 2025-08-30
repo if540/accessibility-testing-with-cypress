@@ -10,11 +10,6 @@ describe("全站通用 a11y 檢測", () => {
   describe("page-has-heading-one", () => {
     pages.forEach((page, index) => {
       it(`Axe: page-has-heading-one - 頁面 ${index + 1}: ${decodeURI(page)}`, () => {
-        cy.addTestContext(`🔗 測試網址 ${Cypress.config('baseUrl') + decodeURI(page)}`);
-        cy.addTestContext(`📄 相對路徑: ${decodeURI(page)}`);
-        cy.addTestContext(`🗂️ 頁面編號: ${index + 1} / ${pages.length}`);
-        
-        // 先用 cy.request 取得狀態碼，再決定是否進行 a11y 檢查
         cy.request({url: page, failOnStatusCode: false, timeout: 10000}).as('req');
         return cy.get('@req').then((response) => {
           cy.afterRequest(page, response, () => {
@@ -31,21 +26,20 @@ describe("全站通用 a11y 檢測", () => {
   describe("heading-order", () => {
     pages.forEach((page, index) => {
       it(`Axe: heading-order (標題階層順序) - 頁面 ${index + 1}: ${decodeURI(page)}`, () => {
-        cy.addTestContext(`🔗 測試網址 ${Cypress.config('baseUrl') + decodeURI(page)}`);
-        cy.addTestContext(`📄 相對路徑: ${decodeURI(page)}`);
-        cy.addTestContext(`🗂️ 頁面編號: ${index + 1} / ${pages.length}`);
-        
         cy.request({url: page, failOnStatusCode: false, timeout: 10000}).as('req');
         return cy.get('@req').then((response) => {
           cy.afterRequest(page, response, () => {
             cy.checkA11y(
               null,
               {
-                skipFailures: true,
+                skipFailures: false,
                 runOnly: {
                   type: 'rule',
                   values: ['heading-order']
                 }
+              },
+              (violations) => {
+                cy.checkA11yViolationsDetails(violations, '標題階層');
               }
             );
           });
@@ -57,10 +51,6 @@ describe("全站通用 a11y 檢測", () => {
   describe("css-font-size-relative 相對字型尺寸單位", () => {
     pages.forEach((page, index) => {
       it(`a11y: css-font-size-relative - 頁面 ${index + 1}: ${decodeURI(page)}`, () => {
-        cy.addTestContext(`🔗 測試網址 ${Cypress.config('baseUrl') + decodeURI(page)}`);
-        cy.addTestContext(`📄 相對路徑: ${decodeURI(page)}`);
-        cy.addTestContext(`🗂️ 頁面編號: ${index + 1} / ${pages.length}`);
-
         cy.request({url: page, failOnStatusCode: false, timeout: 10000}).as('req');
         return cy.get('@req').then((response) => {
           cy.afterRequest(page, response, () => {
@@ -118,21 +108,22 @@ describe("全站通用 a11y 檢測", () => {
   describe("color-contrast", () => {
     pages.forEach((page, index) => {
       it(`Axe: color-contrast - 頁面 ${index + 1}: ${decodeURI(page)}`, () => {
-        cy.addTestContext(`🔗 測試網址 ${Cypress.config('baseUrl') + decodeURI(page)}`);
-        cy.addTestContext(`📄 相對路徑: ${decodeURI(page)}`);
-        cy.addTestContext(`🗂️ 頁面編號: ${index + 1} / ${pages.length}`);
-
-        // 先用 cy.request 取得狀態碼，再決定是否進行 a11y 檢查
         cy.request({url: page, failOnStatusCode: false, timeout: 10000}).as('req');
         cy.get('@req').then((response) => {
           cy.afterRequest(page, response, () => {
-            cy.checkA11y(null, { 
-              skipFailures: true,
-              runOnly: {
-                type: 'rule',
-                values: ['color-contrast']
+            cy.checkA11y(
+              null, 
+              { 
+                skipFailures: false,
+                runOnly: {
+                  type: 'rule',
+                  values: ['color-contrast']
+                }
               },
-            });
+              (violations) => {
+                cy.checkA11yViolationsDetails(violations, '色彩對比');
+              }
+            );
           });
         });
       });
