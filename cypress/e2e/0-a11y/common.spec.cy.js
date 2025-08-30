@@ -29,6 +29,29 @@ describe("全站通用 a11y 檢測", () => {
           });
         });
       });
+
+      it(`首個 heading 應為 h1，頁面 ${index + 1}: ${decodeURI(page)}`, () => {
+        cy.request({url: page, failOnStatusCode: false, timeout: 10000}).as('req');
+        return cy.get('@req').then((response) => {
+          cy.afterRequest(page, response, () => {
+            cy.get('h1, h2, h3, h4, h5, h6').then(($el) => {
+              expect($el.first().get(0).tagName, '首個 heading 不是 h1').to.eq('H1');
+            });
+          });
+        });
+      });
+
+      it(`h1 數量僅有 1 - 頁面 ${index + 1}: ${decodeURI(page)}`, () => {
+        cy.request({url: page, failOnStatusCode: false, timeout: 10000}).as('req');
+        return cy.get('@req').then((response) => {
+          cy.afterRequest(page, response, () => {
+            cy.get('h1').then(($el) => {
+              expect($el.length, 'h1 數量超過 1').to.eq(1);
+            });
+          });
+        });
+      });
+      
     });
   });
 
