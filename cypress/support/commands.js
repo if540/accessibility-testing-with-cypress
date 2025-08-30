@@ -122,6 +122,7 @@ Cypress.Commands.add('afterRequest', (page, response, onSuccess) => {
     cy.url().then(url => { cy.addTestContext(`🌐 實際 URL: ${decodeURI(url)}`); });
     
     cy.injectAxe();
+    cy.configureAxeZh();
     cy.waitForJQueryAjax();
     
     // 添加頁面載入完成的時間戳
@@ -139,6 +140,60 @@ Cypress.Commands.add('afterRequest', (page, response, onSuccess) => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     return cy.then(function() { this.skip(); });
   }
+});
+
+Cypress.Commands.add('configureAxeZh', () => {
+  cy.window({ log: false }).then((win) => {
+    win.axe.configure({
+      rules: [
+        {
+          id: 'no-generic-alt',
+          selector: 'img',
+          any: ['check-generic-alt'],
+          enabled: true,
+          metadata: {
+            description: '圖片應具有有意義的替代文字，避免使用過於通用的詞彙如「圖」、「照片」、「image」等。替代文字應描述圖片的內容或功能，幫助視障使用者理解圖片的目的。',
+            help: '為圖片提供有意義的替代文字',
+            helpUrl: 'https://dequeuniversity.com/rules/axe/4.8/image-redundant-alt'
+          }
+        },
+      ],
+      checks: [
+        {
+          id: 'check-generic-alt',
+          evaluate: function(node, options, virtualNode, context) {
+            const alt = node.getAttribute('alt')?.trim();
+            if (!alt) return true;
+            // 更完整的通用 alt 文字清單，包含中英文及常見變體
+            const disallowed = [
+              'image', 'photo', 'picture', 'img', 'graphic', 'icon', 'logo',
+              '圖', '圖片', '照片', '相片', '圖像', '圖標', '圖示', '圖案', '影像', '標誌', '標記', '圖形',
+              'Image', 'Photo', 'Picture', 'Img', 'Graphic', 'Icon', 'Logo',
+              '示意圖', '插圖', 'avatar', '頭像', 'profile', 'profile image', 'profile picture',
+              '預設圖', '預設圖片', '預設照片', '預設相片', 'default', 'default image', 'default photo', 'default picture',
+              'banner', '橫幅', '背景', 'background', 'cover', '封面', 'cover image', 'cover photo',
+              'test', '測試', '範例', 'example', '範例圖', '範例圖片', '範例照片', '範例相片'
+            ];
+            const isGeneric = disallowed.includes(alt);
+            
+            if (isGeneric) {
+              // 設定訊息數據，讓 fail 訊息可以使用
+              this.data({ alt: alt });
+            }
+            return !isGeneric;
+          },
+          metadata: {
+            impact: 'minor',
+            messages: {
+              pass: 'alt text is meaningful',
+              // eslint-disable-next-line no-template-curly-in-string
+              fail: 'alt text 過於通用: "${data.alt}"'
+            },
+          },
+        },
+      ],
+    });
+  });
 });
 
 /**
