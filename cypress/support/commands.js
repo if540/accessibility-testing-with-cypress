@@ -115,6 +115,10 @@ Cypress.Commands.add('waitForJQueryAjax', (options = {}) => {
 Cypress.Commands.add('afterRequest', (page, response, onSuccess) => {
   cy.addTestContext(`🔢 HTTP 狀態碼: ${response.status}`);
   if (response.status >= 200 && response.status < 400) {
+    cy.visit(page, { failOnStatusCode: false, timeout: 10000 });
+    cy.title().then(title => { cy.addTestContext(`📝 頁面標題: ${title}`); });
+    cy.injectAxe();
+    cy.waitForJQueryAjax();
     onSuccess && onSuccess(page, response);
   } else {
     cy.addTestContext(`❌ 頁面狀態: 無效網址 (HTTP ${response.status})`);
