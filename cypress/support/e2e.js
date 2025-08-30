@@ -25,6 +25,8 @@ import 'cypress-axe'
 //     throw new Error(error.message.split('\n')[0]);
 // });
 
+import 'cypress-wait-until'
+
 import 'cypress-mochawesome-reporter/register'
 
 // 自動擷取失敗測試的截圖

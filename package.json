@@ -53,6 +53,7 @@
     "@types/cypress": "^0.1.6",
     "axe-core": "^4.10.2",
     "cypress-mochawesome-reporter": "^3.8.4",
+    "cypress-wait-until": "^3.0.2",
     "eslint-plugin-cypress": "^2.15.1",
     "mochawesome-merge": "^4.4.1",
     "mochawesome-report-generator": "^6.2.0"
