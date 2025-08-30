@@ -21,8 +21,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:report": "cypress run && npm run generate:report",
-    "generate:report": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/merged-report.json && npx marge cypress/reports/merged-report.json --reportDir cypress/reports --inline",
-    "test:a11y": "cypress run --spec 'cypress/e2e/0-a11y/**/*.cy.js'",
+    "generate:report": "npx mochawesome-merge cypress/reports/accessibility-report*.json > cypress/reports/merged-report.json && npx marge cypress/reports/merged-report.json --reportDir cypress/reports --inline",
+    "test:a11y": "cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
     "test:a11y:report": "npm run test:a11y && npm run generate:report"
   },
   "eslintConfig": {

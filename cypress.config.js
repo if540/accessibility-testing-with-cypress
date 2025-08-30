@@ -17,6 +17,8 @@ module.exports = defineConfig({
     showSkipped: false,
     code: false,
     addContext: true,
+    saveJson: true,
+    saveHtml: true
   },
   e2e: {
     baseUrl: 'http://localhost:3000',
