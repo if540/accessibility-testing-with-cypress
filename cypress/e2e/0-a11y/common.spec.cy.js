@@ -13,10 +13,19 @@ describe("全站通用 a11y 檢測", () => {
         cy.request({url: page, failOnStatusCode: false, timeout: 10000}).as('req');
         return cy.get('@req').then((response) => {
           cy.afterRequest(page, response, () => {
-            cy.get('h1').should(($el) => {
-              expect($el.length, '找不到 h1').to.be.greaterThan(0);
-              expect($el.length, 'h1 數量超過 1').to.eq(1);
-            });
+            cy.checkA11y(
+              null,
+              {
+                skipFailures: false,
+                runOnly: {
+                  type: 'rule',
+                  values: ['page-has-heading-one']
+                }
+              },
+              (violations) => {
+                cy.checkA11yViolationsDetails(violations, '標題階層');
+              }
+            );
           });
         });
       });
