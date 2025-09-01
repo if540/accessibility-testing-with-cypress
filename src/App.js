@@ -6,7 +6,7 @@ function Home() {
     <div className="row">
         <div className="col-md-5 mx-auto">
             <form className="m-4">
-              <img src="/logo.png" alt="TEST" width="50%" className="d-block mx-auto mb-4"/>
+              <img src="/logo.png" alt='圖' width="50%" className="d-block mx-auto mb-4"/>
                 <div className="mb-3">
                     <h1 className="h3 mb-3 font-weight-normal text-center">Create an account</h1>
                     <h2 className="h3 mb-3 font-weight-normal text-center">heading h2</h2>
@@ -19,7 +19,7 @@ function Home() {
                     <h5 className="h5 mb-3 font-weight-normal text-center">heading h5</h5>
                     <h6 className="h6 mb-3 font-weight-normal text-center" style={{'fontSize': '20px'}}>heading h6</h6>
                 </div>
-                <div className="mb-3">
+              <div className="mb-3">
                     <label for="exampleInputEmail1" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" aria_labelledby="exampleInputEmail1"/>
                 </div>

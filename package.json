@@ -1,5 +1,6 @@
 {
   "name": "accessibility-testing-with-cypress",
+  "description": "Accessibility testing with Cypress and axe-core",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -55,6 +56,7 @@
     "cypress-mochawesome-reporter": "^3.8.4",
     "cypress-wait-until": "^3.0.2",
     "eslint-plugin-cypress": "^2.15.1",
+    "eslint-plugin-react": "7.37.5",
     "mochawesome-merge": "^4.4.1",
     "mochawesome-report-generator": "^6.2.0"
   }

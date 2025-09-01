@@ -3,7 +3,7 @@
 /* eslint-disable jest/valid-expect, no-unused-expressions, cypress/no-unnecessary-waiting */
 
 // baseurl 設定在 cypress.config.js 中
-import { pages } from "../projectData/clound";
+const pages = ["/"];
 
 describe("全站通用 a11y 檢測", () => {
 
@@ -19,7 +19,7 @@ describe("全站通用 a11y 檢測", () => {
                 skipFailures: false,
                 runOnly: {
                   type: 'rule',
-                  values: ['page-has-heading-one']
+                  values: ['page-has-heading-one', 'no-generic-alt']
                 }
               },
               (violations) => {
