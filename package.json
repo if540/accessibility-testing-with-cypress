@@ -3,28 +3,16 @@
   "description": "Accessibility testing with Cypress and axe-core",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "cypress": "^14.5.4",
-    "cypress-axe": "^1.6.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^7.8.2",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "cypress:run:report": "cypress run && npm run generate:report",
-    "generate:report": "npx mochawesome-merge cypress/reports/accessibility-report*.json > cypress/reports/merged-report.json && npx marge cypress/reports/merged-report.json --reportDir cypress/reports --inline",
-    "test:a11y": "cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
-    "test:a11y:report": "npm run test:a11y && npm run generate:report"
+    "test:a11y": "cross-env CYPRESS_REPORTER=spec cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
+    "test:a11y:report": "cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
+    "test:a11y:trp": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
+    "test:a11y:trp:report": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp CYPRESS_REPORTER=spec cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +38,18 @@
       "last 1 safari version"
     ]
   },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "cypress": "^15.3.0",
+    "cypress-axe": "^1.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.8.2",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
   "devDependencies": {
     "@types/cypress": "^0.1.6",
     "axe-core": "^4.10.2",
@@ -57,7 +57,7 @@
     "cypress-wait-until": "^3.0.2",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-react": "7.37.5",
-    "mochawesome-merge": "^4.4.1",
-    "mochawesome-report-generator": "^6.2.0"
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.3.0"
   }
 }

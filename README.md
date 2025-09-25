@@ -17,15 +17,15 @@ git clone https://github.com/CIRCLECI-GWP/accessibility-testing-using-cypress
 # CD into the directory
 cd accessibility-testing-with-cypress
 
-# Install dependencies
-npm install
+# Install dependencies (使用 pnpm)
+pnpm install
 ```
 
 ### 2. Start web app server
 
 ```bash
 # default application server is port :3000
-npm start
+pnpm start
 ```
 
 ### 3. Running tests with accessibility violations
@@ -34,18 +34,96 @@ npm start
 # checkout 'main' branch using git on cloned repository
 git checkout main
 
-# run test command
-npx cypress run
+# run test command (不產生報告)
+pnpm run test:a11y
 
+# run test command (產生報告)
+pnpm run test:a11y:report
 ```
 
 ### 4. Running tests without accessibility violations
 
 ```bash
 # checkout 'fix/accessibility-violations' branch using git on cloned repository
-
 git checkout fix/accessibility-violations
 
 # run test command
-npx cypress run
+pnpm run test:a11y
+```
+
+## Cypress 升級指南
+
+### 升級 Cypress 到最新版本
+
+```bash
+# 升級 Cypress 相關套件
+pnpm update cypress cypress-axe cypress-mochawesome-reporter cypress-wait-until
+
+# 升級 axe-core
+pnpm update axe-core
+
+# 升級報告相關套件
+pnpm update mochawesome-merge mochawesome-report-generator
+
+# 重新安裝 Cypress(C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x)
+npx cypress install
+
+# 上一步安裝好後，如果需要使用 Cypress APP，需手動修改捷徑 ICON 路徑
+C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x\Cypress\Cypress.exe
+C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x
+```
+
+### 環境變數配置
+
+本專案支援透過環境變數來控制測試環境和報告器：
+
+```bash
+# 測試不同環境
+cross-env CYPRESS_BASE_URL=https://staging.example.com pnpm run test:a11y
+cross-env CYPRESS_BASE_URL=https://production.example.com pnpm run test:a11y:report
+
+# 使用不同的報告器
+cross-env CYPRESS_REPORTER=spec pnpm run test:a11y
+```
+
+### 報告和截圖儲存
+
+- **報告位置**: `cypress/reports/`
+- **截圖位置**: `cypress/screenshots/` (根據 baseUrl 自動分類資料夾)
+- **檔案命名**: 根據 baseUrl 自動分類，例如：
+  - `localhost:3000` → `accessibility-report-localhost-3000.html`
+  - `staging.example.com` → `accessibility-report-staging-example-com.html`
+- **截圖分類**: 不同環境的截圖會儲存在不同資料夾：
+  - `cypress/screenshots/localhost-3000/common.spec.cy.js/` (localhost 環境)
+  - `cypress/screenshots/staging-example-com/common.spec.cy.js/` (staging 環境)
+  - `cypress/screenshots/production-example-com/common.spec.cy.js/` (production 環境)
+
+### 可用的 npm scripts
+
+```bash
+# 開啟 Cypress 測試執行器
+pnpm run cypress:open
+
+# 執行所有測試
+pnpm run cypress:run
+
+# 執行無障礙測試（不產生報告）
+pnpm run test:a11y
+
+# 執行無障礙測試（產生報告）
+pnpm run test:a11y:report
+```
+
+### 故障排除
+
+如果遇到 Cypress 無法執行的問題：
+
+```bash
+# 重新安裝 Cypress
+npx cypress install
+
+# 清除快取並重新安裝
+pnpm store prune
+pnpm install
+npx cypress install
 ```
