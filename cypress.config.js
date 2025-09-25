@@ -26,6 +26,8 @@ function generateScreenshotsDir() {
   // 將點號替換為短橫線
   const safeHostname = hostname.replace(/\./g, '-')
   
+  // screenshots 只用來暫存用，並非報告依存
+  // 報告裡會直接採用 base64 格式嵌入
   return `cypress/screenshots/${safeHostname}`
 }
 
@@ -57,7 +59,7 @@ module.exports = defineConfig({
     inlineAssets: true,
     saveAllAttempts: true,
     reportDir: 'cypress/reports',
-    overwrite: true,
+    overwrite: false,
     html: true,
     json: false,
     reportFilename: generateReportFilename(),
@@ -69,6 +71,7 @@ module.exports = defineConfig({
     saveJson: false,
     saveHtml: true,
     includeAssets: true,
-    debug: true
+    debug: true,
+    timestamp: 'yyyy-mm-dd_HH-MM-ss'
   },
 })

@@ -89,14 +89,13 @@ cross-env CYPRESS_REPORTER=spec pnpm run test:a11y
 ### 報告和截圖儲存
 
 - **報告位置**: `cypress/reports/`
-- **截圖位置**: `cypress/screenshots/` (根據 baseUrl 自動分類資料夾)
-- **檔案命名**: 根據 baseUrl 自動分類，例如：
-  - `localhost:3000` → `accessibility-report-localhost-3000.html`
-  - `staging.example.com` → `accessibility-report-staging-example-com.html`
+- **截圖位置**: `cypress/screenshots/` (根據 baseUrl 自動分類資料夾，僅用於暫存，報告中採用 base64 格式嵌入)
+- **檔案命名**: 根據 baseUrl 自動分類並加入時間戳記，例如：
+  - `http://localhost:3000` → `accessibility-report-localhost_2025-09-25_14-11-48.html`
+  - `https://trp.nlma.gov.tw/w/trp` → `accessibility-report-trp-nlma-gov-tw_2025-09-25_14-11-48.html`
 - **截圖分類**: 不同環境的截圖會儲存在不同資料夾：
-  - `cypress/screenshots/localhost-3000/common.spec.cy.js/` (localhost 環境)
-  - `cypress/screenshots/staging-example-com/common.spec.cy.js/` (staging 環境)
-  - `cypress/screenshots/production-example-com/common.spec.cy.js/` (production 環境)
+  - `cypress/screenshots/localhost/common.spec.cy.js/` (預設 localhost)
+  - `cypress/screenshots/trp-nlma-gov-tw/common.spec.cy.js/` (指定 baseURL)
 
 ### 可用的 npm scripts
 
