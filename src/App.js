@@ -51,6 +51,35 @@ function Home() {
                 前往關於我們頁面
               </Link>
             </div>
+            <img src="https://placehold.co/125x100" width="50%" className="d-block mx-auto mb-4"/>
+            <img src="https://placehold.co/125x100" width="50%" className="d-block mx-auto mb-4" alt="圖片" />
+            <a href="#"><img src="https://placehold.co/125x100" width="50%" className="d-block mx-auto mb-4" alt="" /></a>
+            <table>
+              <tr>
+                  <td></td>
+                  <th scope="col">星期一</th>
+                  <th scope="col">星期二</th>
+                  <th scope="col">星期三</th>
+                  <th scope="col">星期四</th>
+                  <th scope="col">星期五</th>
+              </tr>
+              <tr>
+                  <th scope="row">上午</th>
+                  <td>休館</td>
+                  <td>開放</td>
+                  <td>開放</td>
+                  <td>開放</td>
+                  <td>開放</td>
+              </tr>
+              <tr>
+                  <th scope="row">下午</th>
+                  <td>休館</td>
+                  <td>開放</td>
+                  <td>開放</td>
+                  <td>開放</td>
+                  <td>休館</td>
+              </tr>
+          </table>
         </div>
 
     </div>

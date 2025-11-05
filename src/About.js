@@ -32,6 +32,31 @@ function About() {
               </a>
             </div>
           </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Gender</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>John</td>
+                <td>25</td>
+                <td>Male</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jane</td>
+                <td>26</td>
+                <td>Female</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

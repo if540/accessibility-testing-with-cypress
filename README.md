@@ -4,78 +4,36 @@
 
 A repository to test accessibility issues with Cypress.
 
-<p align="center"><img src="https://avatars3.githubusercontent.com/u/59034516"></p>
+## 測試
 
-## Set up instructions.
-
-### 1. Clone app and install dependencies.
-
-```bash
-# Clone repository
-git clone https://github.com/CIRCLECI-GWP/accessibility-testing-using-cypress
-
-# CD into the directory
-cd accessibility-testing-with-cypress
-
-# Install dependencies (使用 pnpm)
-pnpm install
-```
-
-### 2. Start web app server
+### 1. 啟動專案站點伺服器(內建 React 測試環境)
 
 ```bash
 # default application server is port :3000
 pnpm start
 ```
 
-### 3. Running tests with accessibility violations
+### 2. 運行可訪問性測試
 
 ```bash
-# checkout 'main' branch using git on cloned repository
-git checkout main
+# 執行 Cypress APP
+pnpm run cypress:open
 
-# run test command (不產生報告)
+# 執行所有測試
+pnpm run cypress:run
+
+# 執行無障礙測試（不產生報告）
 pnpm run test:a11y
 
-# run test command (產生報告)
+# 執行無障礙測試（產生報告）
 pnpm run test:a11y:report
 ```
 
-### 4. Running tests without accessibility violations
-
-```bash
-# checkout 'fix/accessibility-violations' branch using git on cloned repository
-git checkout fix/accessibility-violations
-
-# run test command
-pnpm run test:a11y
-```
-
-## Cypress 升級指南
-
-### 升級 Cypress 到最新版本
-
-```bash
-# 升級 Cypress 相關套件
-pnpm update cypress cypress-axe cypress-mochawesome-reporter cypress-wait-until
-
-# 升級 axe-core
-pnpm update axe-core
-
-# 升級報告相關套件
-pnpm update mochawesome-merge mochawesome-report-generator
-
-# 重新安裝 Cypress(C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x)
-npx cypress install
-
-# 上一步安裝好後，如果需要使用 Cypress APP，需手動修改捷徑 ICON 路徑
-C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x\Cypress\Cypress.exe
-C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x
-```
-
-### 環境變數配置
+## **腳本環境變數配置**
 
 本專案支援透過環境變數來控制測試環境和報告器：
+
+> defaultBaseUrl: http://localhost:3000，配置於 cypress.config.js
 
 ```bash
 # 測試不同環境
@@ -97,23 +55,7 @@ cross-env CYPRESS_REPORTER=spec pnpm run test:a11y
   - `cypress/screenshots/localhost/common.spec.cy.js/` (預設 localhost)
   - `cypress/screenshots/trp-nlma-gov-tw/common.spec.cy.js/` (指定 baseURL)
 
-### 可用的 npm scripts
-
-```bash
-# 開啟 Cypress 測試執行器
-pnpm run cypress:open
-
-# 執行所有測試
-pnpm run cypress:run
-
-# 執行無障礙測試（不產生報告）
-pnpm run test:a11y
-
-# 執行無障礙測試（產生報告）
-pnpm run test:a11y:report
-```
-
-### 故障排除
+## **故障排除**
 
 如果遇到 Cypress 無法執行的問題：
 
@@ -125,4 +67,26 @@ npx cypress install
 pnpm store prune
 pnpm install
 npx cypress install
+```
+
+## **Cypress 升級指南**
+
+> 升級 Cypress 到最新版本
+
+```bash
+# 升級 Cypress 相關套件
+pnpm update cypress cypress-axe cypress-mochawesome-reporter cypress-wait-until
+
+# 升級 axe-core
+pnpm update axe-core
+
+# 升級報告相關套件
+pnpm update mochawesome-merge mochawesome-report-generator
+
+# 重新安裝 Cypress(C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x)
+npx cypress install
+
+# 上一步安裝好後，如果需要使用 Cypress APP，需手動修改捷徑 ICON 路徑
+C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x\Cypress\Cypress.exe
+C:\Users\CCWORK\AppData\Local\Cypress\Cache\x.x.x
 ```

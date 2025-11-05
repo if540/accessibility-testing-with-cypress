@@ -2,11 +2,19 @@
 /* eslint-env cypress/globals */
 /* eslint-disable jest/valid-expect, no-unused-expressions, cypress/no-unnecessary-waiting */
 
+import { modaTableTheadScopeLevelA, axeTableLevelA, axeImageAltLevelA } from '../../utils/a11y';
+
 // baseurl 設定在 cypress.config.js 中
 const pages = ["/"];
 
-describe("全站通用 a11y 檢測", () => {
+describe("高度手動訂定規則檢測", () => {
 
+  modaTableTheadScopeLevelA(pages);
+
+  axeTableLevelA(pages);
+
+  axeImageAltLevelA(pages);
+  
   describe("page-has-heading-one", () => {
     pages.forEach((page, index) => {
       it(`Axe: page-has-heading-one - 頁面 ${index + 1}: ${decodeURI(page)}`, () => {
@@ -164,7 +172,7 @@ describe("全站通用 a11y 檢測", () => {
 
 });
 
-// 測試用
+// 測試用https://localhost:44377/web/Cabcych/index
 // assert.fail(`❌ 無效網址 (HTTP ${response.status})`);
 // cy.checkA11y(
 //   null,

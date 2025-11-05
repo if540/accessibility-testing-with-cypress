@@ -9,10 +9,11 @@
     "test": "react-scripts test",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:a11y": "cross-env CYPRESS_REPORTER=spec cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
-    "test:a11y:report": "cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
-    "test:a11y:trp": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'",
-    "test:a11y:trp:report": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/common.spec.cy.js'"
+    "cypress:open:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress open",
+    "test:a11y": "cross-env CYPRESS_REPORTER=spec cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
+    "test:a11y:report": "cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
+    "test:a11y:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
+    "test:a11y:url:report": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'"
   },
   "eslintConfig": {
     "extends": [
@@ -42,8 +43,6 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "cypress": "^15.3.0",
-    "cypress-axe": "^1.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.8.2",
@@ -52,6 +51,8 @@
   },
   "devDependencies": {
     "@types/cypress": "^0.1.6",
+    "cypress": "^15.3.0",
+    "cypress-axe": "^1.7.0",
     "axe-core": "^4.10.2",
     "cypress-mochawesome-reporter": "^3.8.4",
     "cypress-wait-until": "^3.0.2",
