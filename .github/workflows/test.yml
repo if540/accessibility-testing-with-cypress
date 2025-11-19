@@ -25,6 +25,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
+      # 安裝 pnpm
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
       # Runs a single command using the runners shell
       - name: Test Accessibility by specified url
         run: pnpm run test:a11y:url
