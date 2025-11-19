@@ -44,7 +44,7 @@ jobs:
       - name: Deploy Accessibility Reports
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: cypress/reports
           destination_dir: a11y-reports
           commit_message: "Deploy A11y Reports [skip ci]"
@@ -57,7 +57,7 @@ jobs:
         if: ${{ github.event.inputs.deploy_react == 'yes' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: build
           destination_dir: react-app
           commit_message: "Deploy React App [skip ci]"
