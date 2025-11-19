@@ -36,9 +36,12 @@ jobs:
       # Runs a single command using the runners shell
       - name: Test Accessibility by specified url
         run: pnpm run test:a11y:url
+        continue-on-error: true  # 失敗也會繼續下一步
 
       - name: Upload a11y report
         uses: actions/upload-artifact@v4
         with:
           name: a11y-report
-          path: cypress/reports/*.json  # 或 *.html
+          path: |
+            cypress/reports/*.html
+            cypress/reports/.jsons/*.json

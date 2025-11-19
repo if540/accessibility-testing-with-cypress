@@ -12,8 +12,8 @@
     "cypress:open:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress open",
     "test:a11y": "cross-env CYPRESS_REPORTER=spec cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
     "test:a11y:report": "cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
-    "test:a11y:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
-    "test:a11y:url:report": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'"
+    "test:a11y:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js' --headless",
+    "test:a11y:url:report": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js' --headless"
   },
   "eslintConfig": {
     "extends": [
