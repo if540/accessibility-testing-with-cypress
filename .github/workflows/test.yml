@@ -37,3 +37,8 @@ jobs:
       - name: Test Accessibility by specified url
         run: pnpm run test:a11y:url
 
+      - name: Upload a11y report
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-report
+          path: cypress/reports/*.json  # 或 *.html
