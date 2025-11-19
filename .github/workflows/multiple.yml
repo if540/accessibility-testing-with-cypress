@@ -42,7 +42,7 @@ jobs:
 
       # 5️⃣ 部署 Cypress report 到 gh-pages/a11y-reports
       - name: Deploy Accessibility Reports
-        uses: peaceiris/actions-gh-pages@v5
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: cypress/reports
@@ -55,7 +55,7 @@ jobs:
         run: pnpm run build
       - name: Deploy React build to gh-pages
         if: ${{ github.event.inputs.deploy_react == 'yes' }}
-        uses: peaceiris/actions-gh-pages@v5
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build
