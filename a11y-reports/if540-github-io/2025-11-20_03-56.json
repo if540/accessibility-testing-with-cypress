@@ -409,7 +409,7 @@
           "all": [],
           "none": [],
           "impact": "moderate",
-          "html": "<label for=\"form-check-label\" class=\"form-check-label mb-3\">I agree to the  <a href=\"/accessibility-testing-with-cypress/react-app/about\" data-discover=\"true\">terms and conditions</a> </label>",
+          "html": "<label for=\"form-check-label\" class=\"form-check-label mb-3\">I agree to the  <a href=\"#/about\" data-discover=\"true\">terms and conditions</a> </label>",
           "target": [
             "label[for=\"form-check-label\"]"
           ],
@@ -472,7 +472,7 @@
           "all": [],
           "none": [],
           "impact": "moderate",
-          "html": "<div class=\"text-center mt-3\"><a class=\"btn btn-secondary\" href=\"/accessibility-testing-with-cypress/react-app/about\" data-discover=\"true\">前往關於我們頁面</a></div>",
+          "html": "<div class=\"text-center mt-3\"><a class=\"btn btn-secondary\" href=\"#/about\" data-discover=\"true\">前往關於我們頁面</a></div>",
           "target": [
             ".mt-3"
           ],
