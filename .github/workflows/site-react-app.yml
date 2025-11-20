@@ -7,6 +7,10 @@ on:
         description: '是否清除 pnpm store 快取'
         required: true
         default: 'false'
+      keep_report_files:
+        description: '是否保留報告檔案'
+        required: true
+        default: 'true'
 
 jobs:
   react-app:
@@ -23,13 +27,13 @@ jobs:
       # 先清除舊的 pnpm store 快取
       - name: Remove old pnpm store cache
         if: ${{ github.event.inputs.clean_cache == 'true' }}
-        run: rm -rf ~/.pnpm-store
+        run: rm -rf ~/.local/share/pnpm/store
 
       # 快取 pnpm store
       - name: Cache pnpm store
         uses: actions/cache@v4
         with:
-          path: ~/.pnpm-store
+          path: ~/.local/share/pnpm/store
           key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: pnpm-store-${{ runner.os }}-
 
@@ -49,4 +53,5 @@ jobs:
           github_token: ${{ secrets.GH_PAT }}
           publish_dir: cypress/reports
           destination_dir: a11y-reports
+          keep_files: ${{ github.event.inputs.keep_report_files == 'true' }}
           commit_message: "Deploy A11y Reports [skip ci]"
