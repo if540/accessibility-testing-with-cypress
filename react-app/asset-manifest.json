@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/accessibility-testing-with-cypress/react-app/static/css/main.db79b9ba.css",
-    "main.js": "/accessibility-testing-with-cypress/react-app/static/js/main.340987d3.js",
+    "main.js": "/accessibility-testing-with-cypress/react-app/static/js/main.80f8d8f8.js",
     "index.html": "/accessibility-testing-with-cypress/react-app/index.html"
   },
   "entrypoints": [
     "static/css/main.db79b9ba.css",
-    "static/js/main.340987d3.js"
+    "static/js/main.80f8d8f8.js"
   ]
 }
