@@ -29,8 +29,8 @@ function About() {
             </p>
             
             <div className="text-center mt-5">
-              <Link to="/" className="btn btn-primary">
-                返回首頁
+              <Link to="/example" className="btn btn-primary">
+                返回錯誤範例頁面
               </Link>
             </div>
           </div>
