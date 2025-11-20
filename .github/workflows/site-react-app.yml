@@ -41,15 +41,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # 4️⃣ Cypress + axe 測試
-      - name: Run Accessibility Tests
-        run: pnpm exec cross-env CYPRESS_BASE_URL=https://if540.github.io/accessibility-testing-with-cypress/react-app/ cypress run --spec 'cypress/e2e/sites/**/react-app-ci.spec.cy.js' --headless
-        continue-on-error: true
-
-      # 5️⃣ 從 gh-pages 拉取 reports-data/db.json
+      # 4️⃣ 從 gh-pages 拉取 reports-data/db.json
       - name: Fetch reports-data/db.json from gh-pages
         run: |
           curl -L https://github.com/if540/accessibility-testing-with-cypress/raw/gh-pages/reports-data/db.json -o public/data/db.json
+
+      # 5️⃣ Cypress + axe 測試
+      - name: Run Accessibility Tests
+        run: pnpm exec cross-env CYPRESS_BASE_URL=https://if540.github.io/accessibility-testing-with-cypress/react-app/ cypress run --spec 'cypress/e2e/sites/**/react-app-ci.spec.cy.js' --headless
+        continue-on-error: true
 
       # 6️⃣ 部署 Cypress report 到 gh-pages/a11y-reports
       - name: Deploy Accessibility Reports
