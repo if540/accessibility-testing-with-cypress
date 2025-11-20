@@ -19,7 +19,7 @@ describe("Cypress Axe CI 測試", () => {
   const a11yReportFilePath = `cypress/reports/${safeHostname}/${timestamp}.json`;
 
   it('Axe: 首頁', () => {
-    const page = "/";
+    const page = "/#/example";
     const testName = Cypress.currentTest.title;
 
     cy.visit(encodeURI(page));
@@ -51,7 +51,7 @@ describe("Cypress Axe CI 測試", () => {
   });
   
   it('Axe: 關於我們', () => {
-    const page = "/#/about";
+    const page = "/#/example/about";
     const testName = Cypress.currentTest.title;
     
     cy.visit(encodeURI(page));

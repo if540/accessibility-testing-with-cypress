@@ -70,6 +70,7 @@ module.exports = defineConfig({
           const path = require('path');
           
           const fullPath = path.join(process.cwd(), filePath);
+          const dbJsonPath = path.join(process.cwd(), 'public/db.json');
           
           try {
             // 嘗試讀取現有檔案
@@ -103,6 +104,107 @@ module.exports = defineConfig({
                 existingData[itemPage].push(item);
               });
             }
+            
+            // 確保目錄存在
+            const dir = path.dirname(fullPath);
+            if (!fs.existsSync(dir)) {
+              fs.mkdirSync(dir, { recursive: true });
+            }
+            
+            // 寫入合併後的資料到目標檔案
+            fs.writeFileSync(fullPath, JSON.stringify(existingData, null, 2), 'utf8');
+            
+            // 統計 impact 數量
+            const impactCounts = {
+              critical: 0,
+              serious: 0,
+              moderate: 0,
+              minor: 0
+            };
+            
+            // 遍歷所有頁面的 violations
+            Object.keys(existingData).forEach(pageKey => {
+              const violations = existingData[pageKey];
+              if (Array.isArray(violations)) {
+                violations.forEach(violation => {
+                  if (violation.impact) {
+                    const impact = violation.impact.toLowerCase();
+                    if (impactCounts.hasOwnProperty(impact)) {
+                      impactCounts[impact]++;
+                    }
+                  }
+                });
+              }
+            });
+            
+            // 更新 db.json
+            let dbData = [];
+            if (fs.existsSync(dbJsonPath)) {
+              try {
+                dbData = JSON.parse(fs.readFileSync(dbJsonPath, 'utf8'));
+              } catch (error) {
+                console.error('讀取 db.json 失敗:', error);
+                dbData = [];
+              }
+            }
+            
+            // 從 filePath 提取域名和時間戳
+            const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl;
+            const hostname = new URL(baseUrl).hostname;
+            const domainName = hostname;
+            
+            // 產生時間戳 (台北時間 UTC+8)
+            const date = new Date();
+            const formatter = new Intl.DateTimeFormat('en-US', {
+              timeZone: 'Asia/Taipei',
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            });
+            const parts = formatter.formatToParts(date);
+            const year = parts.find(p => p.type === 'year').value;
+            const month = parts.find(p => p.type === 'month').value;
+            const day = parts.find(p => p.type === 'day').value;
+            const hour = parts.find(p => p.type === 'hour').value;
+            const minute = parts.find(p => p.type === 'minute').value;
+            const timestamp = `${year}-${month}-${day}_${hour}-${minute}`;
+            const lastRun = `${year}-${month}-${day} ${hour}:${minute}:00`;
+            
+            // 從 filePath 提取報告路徑（相對於 cypress/reports）
+            const reportRelativePath = filePath.replace(/^cypress\/reports\//, '');
+            const reportUrl = `/${reportRelativePath}`;
+            
+            // 查找或創建對應的域名記錄
+            let domainEntry = dbData.find(entry => entry.domainName === domainName);
+            if (!domainEntry) {
+              domainEntry = {
+                domainName: domainName,
+                lastRun: lastRun,
+                critical: 0,
+                serious: 0,
+                moderate: 0,
+                reportsUrl: []
+              };
+              dbData.push(domainEntry);
+            } else {
+              domainEntry.lastRun = lastRun;
+            }
+            
+            // 更新 impact 統計數量
+            domainEntry.critical = impactCounts.critical;
+            domainEntry.serious = impactCounts.serious;
+            domainEntry.moderate = impactCounts.moderate;
+            
+            // 添加報告 URL（如果不存在）
+            if (!domainEntry.reportsUrl.includes(reportUrl)) {
+              domainEntry.reportsUrl.push(reportUrl);
+            }
+            
+            // 寫入更新後的 db.json
+            fs.writeFileSync(dbJsonPath, JSON.stringify(dbData, null, 4), 'utf8');
             
             return existingData;
           } catch (error) {
