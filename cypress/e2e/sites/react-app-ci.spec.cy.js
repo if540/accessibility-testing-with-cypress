@@ -7,15 +7,24 @@ describe("Cypress Axe CI 測試", () => {
   const hostname = new URL(baseUrl).hostname
   const safeHostname = hostname.replace(/\./g, '-')
 
-  // 產生 yyyy-mm-dd_HH-MM-ss 格式的 timestamp
+  // 產生 yyyy-mm-dd_HH-MM-ss 格式的 timestamp (台北時間 UTC+8)
   const date = new Date();
-  const pad = n => n.toString().padStart(2, '0');
-  const timestamp = [
-    date.getFullYear(),
-    pad(date.getMonth() + 1),
-    pad(date.getDate())
-  ].join('-') + '_' +
-  [pad(date.getHours()), pad(date.getMinutes())].join('-');
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Taipei',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+  const parts = formatter.formatToParts(date);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+  const hour = parts.find(p => p.type === 'hour').value;
+  const minute = parts.find(p => p.type === 'minute').value;
+  const timestamp = `${year}-${month}-${day}_${hour}-${minute}`;
   const a11yReportFilePath = `cypress/reports/${safeHostname}/${timestamp}.json`;
 
   it('Axe: 首頁', () => {

@@ -11,10 +11,28 @@ function generateReportFilename() {
   // 將點號替換為短橫線
   const safeHostname = hostname.replace(/\./g, '-')
   
-  // 加入時間戳記
-  // const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)
+  // 產生台北時間的時間戳記 (UTC+8)
+  const date = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Taipei',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+  const parts = formatter.formatToParts(date);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+  const hour = parts.find(p => p.type === 'hour').value;
+  const minute = parts.find(p => p.type === 'minute').value;
+  // const second = parts.find(p => p.type === 'second').value;
+  const timestamp = `${year}-${month}-${day}_${hour}-${minute}`;
   
-  return `accessibility-report-${safeHostname}`
+  return `accessibility-report-${safeHostname}-${timestamp}`
 }
 
 function generateScreenshotsDir() {
@@ -132,6 +150,6 @@ module.exports = defineConfig({
     saveHtml: true,
     includeAssets: true,
     debug: true,
-    timestamp: 'yyyy-mm-dd_HH-MM-ss'
+    timestamp: false
   },
 })
