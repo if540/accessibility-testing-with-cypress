@@ -1,12 +1,12 @@
 [
     {
         "domainName": "localhost",
-        "lastRun": "2025-11-20 17:22:00",
+        "lastRun": "2025-11-20 17:40:00",
         "critical": 2,
         "serious": 1,
         "moderate": 0,
         "reportsUrl": [
-            "/localhost/2025-11-20_17-22.json"
+            "/localhost/2025-11-20_17-40.json"
         ]
     }
 ]

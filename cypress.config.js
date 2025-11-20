@@ -70,7 +70,7 @@ module.exports = defineConfig({
           const path = require('path');
           
           const fullPath = path.join(process.cwd(), filePath);
-          const dbJsonPath = path.join(process.cwd(), 'public/db.json');
+          const dbJsonPath = path.join(process.cwd(), 'public/data/db.json');
           
           try {
             // 嘗試讀取現有檔案
