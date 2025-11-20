@@ -51,7 +51,7 @@ describe("Cypress Axe CI 測試", () => {
   });
   
   it('Axe: 關於我們', () => {
-    const page = "/about";
+    const page = "/#/about";
     const testName = Cypress.currentTest.title;
     
     cy.visit(encodeURI(page));

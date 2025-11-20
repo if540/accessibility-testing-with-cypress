@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import About from './About';
 
 function Home() {
@@ -88,7 +88,7 @@ function Home() {
 
 function App() {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <div className="container-fluid">
         <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
           <div className="container">
