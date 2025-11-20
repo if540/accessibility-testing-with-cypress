@@ -46,7 +46,12 @@ jobs:
         run: pnpm exec cross-env CYPRESS_BASE_URL=https://if540.github.io/accessibility-testing-with-cypress/react-app/ cypress run --spec 'cypress/e2e/sites/**/react-app-ci.spec.cy.js' --headless
         continue-on-error: true
 
-      # 5️⃣ 部署 Cypress report 到 gh-pages/a11y-reports
+      # 5️⃣ 從 gh-pages 拉取 reports-data/db.json
+      - name: Fetch reports-data/db.json from gh-pages
+        run: |
+          curl -L https://github.com/if540/accessibility-testing-with-cypress/raw/gh-pages/reports-data/db.json -o public/data/db.json
+
+      # 6️⃣ 部署 Cypress report 到 gh-pages/a11y-reports
       - name: Deploy Accessibility Reports
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -56,11 +61,11 @@ jobs:
           keep_files: ${{ github.event.inputs.keep_report_files == 'true' }}
           commit_message: "Deploy A11y Reports [skip ci]"
 
-      # 6️⃣ 部署 db.json
-      - name: Deploy React App Data
+      # 7️⃣ 部署 db.json
+      - name: Deploy reports-data/db.json
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_PAT }}
           publish_dir: public/data
-          destination_dir: react-app/data
-          commit_message: "Deploy React App Data [skip ci]"
+          destination_dir: reports-data
+          commit_message: "Deploy reports-data/db.json [skip ci]"
