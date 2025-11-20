@@ -39,7 +39,7 @@ jobs:
 
       # 4️⃣ Cypress + axe 測試
       - name: Run Accessibility Tests
-        run: pnpm exec cypress run --spec 'cypress/e2e/sites/**/react-app-ci.spec.cy.js' --headless
+        run: pnpm exec cross-env CYPRESS_BASE_URL=https://if540.github.io/accessibility-testing-with-cypress/react-app/ cypress run --spec 'cypress/e2e/sites/**/react-app-ci.spec.cy.js' --headless
         continue-on-error: true
 
       # 5️⃣ 部署 Cypress report 到 gh-pages/a11y-reports

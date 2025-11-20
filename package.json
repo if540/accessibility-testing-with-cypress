@@ -10,7 +10,7 @@
     "deploy": "gh-pages -d build -b gh-pages -e react-app",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-ci.spec.cy.js' --headless",
-    "cypress:open:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress open"
+    "cypress:open:url": "cross-env CYPRESS_BASE_URL=https://if540.github.io/accessibility-testing-with-cypress/react-app/ cypress open"
   },
   "homepage": "https://if540.github.io/accessibility-testing-with-cypress/react-app",
   "eslintConfig": {
