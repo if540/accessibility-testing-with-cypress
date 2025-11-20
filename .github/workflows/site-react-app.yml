@@ -55,3 +55,12 @@ jobs:
           destination_dir: a11y-reports
           keep_files: ${{ github.event.inputs.keep_report_files == 'true' }}
           commit_message: "Deploy A11y Reports [skip ci]"
+
+      # 6️⃣ 部署 db.json
+      - name: Deploy React App Data
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          publish_dir: public/data
+          destination_dir: react-app/data
+          commit_message: "Deploy React App Data [skip ci]"
