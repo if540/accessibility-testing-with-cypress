@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
+
 function About() {
   return (
     <div className="row">
       <div className="col-md-8 mx-auto">
         <div className="m-4">
-          <img src="/logo.png" alt="Logo" width="200" className="d-block mx-auto mb-4"/>
+          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" width="200" className="d-block mx-auto mb-4"/>
           <h1 className="h1 mb-4 text-center">關於我們</h1>
           
           <div className="content">
@@ -27,9 +29,9 @@ function About() {
             </p>
             
             <div className="text-center mt-5">
-              <a href="/" className="btn btn-primary">
+              <Link to="/" className="btn btn-primary">
                 返回首頁
-              </a>
+              </Link>
             </div>
           </div>
 

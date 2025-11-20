@@ -6,7 +6,7 @@ function Home() {
     <div className="row">
         <div className="col-md-5 mx-auto">
             <form className="m-4">
-              <img src="/logo.png" alt='圖' width="50%" className="d-block mx-auto mb-4"/>
+              <img src={`${process.env.PUBLIC_URL}/logo.png`} alt='圖' width="50%" className="d-block mx-auto mb-4"/>
                 <div className="mb-3">
                     <h1 className="h3 mb-3 font-weight-normal text-center">Create an account</h1>
                     <h2 className="h3 mb-3 font-weight-normal text-center">heading h2</h2>
@@ -88,12 +88,12 @@ function Home() {
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <div className="container-fluid">
         <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
           <div className="container">
             <Link className="navbar-brand" to="/">
-              <img src="/logo.png" alt="Logo" width="30" height="30" className="me-2"/>
+              <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" width="30" height="30" className="me-2"/>
               我的網站
             </Link>
             <div className="navbar-nav">

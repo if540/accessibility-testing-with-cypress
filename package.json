@@ -7,14 +7,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "gh-pages -d build -b gh-pages -e react-app",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "cypress:open:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress open",
-    "test:a11y": "cross-env CYPRESS_REPORTER=spec cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
-    "test:a11y:report": "cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js'",
-    "test:a11y:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js' --headless",
-    "test:a11y:url:report": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-core.spec.cy.js' --headless"
+    "cypress:run": "cypress run --spec 'cypress/e2e/0-a11y/**/cypress-axe-ci.spec.cy.js' --headless",
+    "cypress:open:url": "cross-env CYPRESS_BASE_URL=https://trp.nlma.gov.tw/w/trp cypress open"
   },
+  "homepage": "https://if540.github.io/accessibility-testing-with-cypress/react-app",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -59,6 +57,7 @@
     "cypress-wait-until": "^3.0.2",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-react": "7.37.5",
+    "gh-pages": "^6.3.0",
     "mochawesome-merge": "^5.0.0",
     "mochawesome-report-generator": "^6.3.0"
   }

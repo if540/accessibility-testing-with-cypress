@@ -1,0 +1,52 @@
+name: React APP
+
+on:
+  workflow_dispatch:
+    inputs:
+      clean_cache:
+        description: '是否清除 pnpm store 快取'
+        required: true
+        default: 'false'
+
+jobs:
+  react-app:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Checkout repo
+      - uses: actions/checkout@v4
+
+      # 2️⃣ 安裝 pnpm
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      # 先清除舊的 pnpm store 快取
+      - name: Remove old pnpm store cache
+        if: ${{ github.event.inputs.clean_cache == 'true' }}
+        run: rm -rf ~/.pnpm-store
+
+      # 快取 pnpm store
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-${{ runner.os }}-
+
+      # 3️⃣ 安裝專案依賴
+      - name: Install dependencies
+        run: pnpm install
+
+      # 4️⃣ Cypress + axe 測試
+      - name: Run Accessibility Tests
+        run: pnpm exec cypress run --spec 'cypress/e2e/sites/**/react-app-ci.spec.cy.js' --headless
+        continue-on-error: true
+
+      # 5️⃣ 部署 Cypress report 到 gh-pages/a11y-reports
+      - name: Deploy Accessibility Reports
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          publish_dir: cypress/reports
+          destination_dir: a11y-reports
+          commit_message: "Deploy A11y Reports [skip ci]"
