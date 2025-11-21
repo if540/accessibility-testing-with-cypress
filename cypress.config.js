@@ -289,6 +289,7 @@ module.exports = defineConfig({
               existingReport.serious = reportCounts.serious;
               existingReport.moderate = reportCounts.moderate;
               existingReport.minor = reportCounts.minor;
+              existingReport.lastRun = lastRun;
             } else {
               // 如果報告不存在，添加新記錄
               domainEntry.reports.push({
@@ -297,6 +298,7 @@ module.exports = defineConfig({
                 serious: reportCounts.serious,
                 moderate: reportCounts.moderate,
                 minor: reportCounts.minor,
+                lastRun: lastRun,
                 filePath: reportUrl
               });
             }
