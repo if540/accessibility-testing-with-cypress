@@ -16,5 +16,23 @@
                 "filePath": "/if540-github-io/202511211403.json"
             }
         ]
+    },
+    {
+        "domainName": "if540-github-io",
+        "lastRun": "2025-11-21 14:11:00",
+        "critical": 2,
+        "serious": 1,
+        "moderate": 0,
+        "minor": 0,
+        "reports": [
+            {
+                "id": "202511211411",
+                "critical": 2,
+                "serious": 1,
+                "moderate": 0,
+                "minor": 0,
+                "filePath": "/if540-github-io/202511211411.json"
+            }
+        ]
     }
 ]
