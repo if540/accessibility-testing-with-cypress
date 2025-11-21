@@ -75,7 +75,7 @@ module.exports = defineConfig({
           // 從 filePath 提取域名和時間戳
           const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl;
           const hostname = new URL(baseUrl).hostname;
-          const domainName = hostname;
+          const safeHostname = hostname.replace(/\./g, '-');
           
           // 產生時間戳 (台北時間 UTC+8)
           const date = new Date();
@@ -100,7 +100,7 @@ module.exports = defineConfig({
           try {
             // 嘗試讀取現有檔案
             let existingData = {
-              domainName: domainName,
+              domainName: safeHostname,
               lastRun: lastRun,
               pages: {}
             };
@@ -223,10 +223,10 @@ module.exports = defineConfig({
             const reportId = reportUrl.replace(/^.*\//, '').replace(/\.json$/, '');
             
             // 查找或創建對應的域名記錄
-            let domainEntry = dbData.find(entry => entry.domainName === domainName);
+            let domainEntry = dbData.find(entry => entry.domainName === safeHostname);
             if (!domainEntry) {
               domainEntry = {
-                domainName: domainName,
+                domainName: safeHostname,
                 lastRun: lastRun,
                 critical: 0,
                 serious: 0,
@@ -311,7 +311,7 @@ module.exports = defineConfig({
             
             const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl;
             const hostname = new URL(baseUrl).hostname;
-            const domainName = hostname;
+            const safeHostname = hostname.replace(/\./g, '-');
             
             // 產生時間戳 (台北時間 UTC+8)
             const date = new Date();
@@ -333,7 +333,7 @@ module.exports = defineConfig({
             const lastRun = `${year}-${month}-${day} ${hour}:${minute}:00`;
             
             const result = {
-              domainName: domainName,
+              domainName: safeHostname,
               lastRun: lastRun,
               pages: {}
             };
