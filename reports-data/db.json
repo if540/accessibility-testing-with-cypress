@@ -1,8 +1,8 @@
 [
     {
         "domainName": "if540.github.io",
-        "lastRun": "2025-11-20 18:18:00",
-        "critical": 3,
+        "lastRun": "2025-11-21 10:10:00",
+        "critical": 2,
         "serious": 1,
         "moderate": 0,
         "reports": [
@@ -12,6 +12,13 @@
                 "moderate": 0,
                 "minor": 1,
                 "filePath": "/localhost/2025-11-21_09-37.json"
+            },
+            {
+                "critical": 2,
+                "serious": 1,
+                "moderate": 0,
+                "minor": 0,
+                "filePath": "/if540-github-io/2025-11-21_10-10.json"
             }
         ]
     }
