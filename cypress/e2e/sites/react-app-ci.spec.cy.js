@@ -24,7 +24,7 @@ describe("Cypress Axe CI 測試", () => {
   const day = parts.find(p => p.type === 'day').value;
   const hour = parts.find(p => p.type === 'hour').value;
   const minute = parts.find(p => p.type === 'minute').value;
-  const timestamp = `${year}-${month}-${day}_${hour}-${minute}`;
+  const timestamp = `${year}${month}${day}${hour}${minute}`;
   const a11yReportFilePath = `cypress/reports/${safeHostname}/${timestamp}.json`;
 
   it('Axe: 首頁', () => {

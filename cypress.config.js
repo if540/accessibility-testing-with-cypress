@@ -30,7 +30,7 @@ function generateReportFilename() {
   const hour = parts.find(p => p.type === 'hour').value;
   const minute = parts.find(p => p.type === 'minute').value;
   // const second = parts.find(p => p.type === 'second').value;
-  const timestamp = `${year}-${month}-${day}_${hour}-${minute}`;
+  const timestamp = `${year}${month}${day}${hour}${minute}`;
   
   return `accessibility-report-${safeHostname}-${timestamp}`
 }
@@ -220,6 +220,7 @@ module.exports = defineConfig({
             // 從 filePath 提取報告路徑（相對於 cypress/reports）
             const reportRelativePath = filePath.replace(/^cypress\/reports\//, '');
             const reportUrl = `/${reportRelativePath}`;
+            const reportId = reportUrl.replace(/^.*\//, '').replace(/\.json$/, '');
             
             // 查找或創建對應的域名記錄
             let domainEntry = dbData.find(entry => entry.domainName === domainName);
@@ -291,6 +292,7 @@ module.exports = defineConfig({
             } else {
               // 如果報告不存在，添加新記錄
               domainEntry.reports.push({
+                id: reportId,
                 critical: reportCounts.critical,
                 serious: reportCounts.serious,
                 moderate: reportCounts.moderate,
