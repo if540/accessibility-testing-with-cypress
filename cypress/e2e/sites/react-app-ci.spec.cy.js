@@ -56,9 +56,6 @@ describe("Cypress Axe CI 測試", () => {
           page,
           filePath: a11yReportFilePath,
           newData: violationsWithPage
-        }).then((mergedData) => {
-          // 寫入合併後的資料
-          cy.writeFile(a11yReportFilePath, mergedData);
         });
       }
     ).then(() => {
@@ -69,9 +66,6 @@ describe("Cypress Axe CI 測試", () => {
             page,
             filePath: a11yReportFilePath,
             newData: []
-          }).then((mergedData) => {
-            // 寫入合併後的資料
-            cy.writeFile(a11yReportFilePath, mergedData);
           });
         }
       });
@@ -107,9 +101,6 @@ describe("Cypress Axe CI 測試", () => {
           page,
           filePath: a11yReportFilePath,
           newData: violationsWithPage
-        }).then((mergedData) => {
-          // 寫入合併後的資料
-          cy.writeFile(a11yReportFilePath, mergedData);
         });
       }
     ).then(() => {
@@ -120,9 +111,6 @@ describe("Cypress Axe CI 測試", () => {
             page,
             filePath: a11yReportFilePath,
             newData: []
-          }).then((mergedData) => {
-            // 寫入合併後的資料
-            cy.writeFile(a11yReportFilePath, mergedData);
           });
         }
       });
