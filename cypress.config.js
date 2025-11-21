@@ -95,14 +95,23 @@ module.exports = defineConfig({
             }
             
             // 將新資料按照 page 分組
-            if (Array.isArray(newData) && newData.length > 0) {
-              newData.forEach(item => {
-                const itemPage = item.page || '';
-                if (!existingData[itemPage]) {
+            if (Array.isArray(newData)) {
+              if (newData.length > 0) {
+                // 如果有 violations，合併到現有資料
+                newData.forEach(item => {
+                  const itemPage = item.page || '';
+                  if (!existingData[itemPage]) {
+                    existingData[itemPage] = [];
+                  }
+                  existingData[itemPage].push(item);
+                });
+              } else {
+                // 如果 newData 是空陣列，確保該頁面有記錄（空陣列）
+                const itemPage = page || '';
+                if (!existingData.hasOwnProperty(itemPage)) {
                   existingData[itemPage] = [];
                 }
-                existingData[itemPage].push(item);
-              });
+              }
             }
             
             // 確保目錄存在
@@ -186,7 +195,8 @@ module.exports = defineConfig({
                 critical: 0,
                 serious: 0,
                 moderate: 0,
-                reportsUrl: []
+                minor: 0,
+                reports: []
               };
               dbData.push(domainEntry);
             } else {
@@ -197,10 +207,16 @@ module.exports = defineConfig({
             domainEntry.critical = impactCounts.critical;
             domainEntry.serious = impactCounts.serious;
             domainEntry.moderate = impactCounts.moderate;
-            
+
             // 添加報告 URL（如果不存在）
-            if (!domainEntry.reportsUrl.includes(reportUrl)) {
-              domainEntry.reportsUrl.push(reportUrl);
+            if (!domainEntry.reports.some(report => report.filePath === reportUrl)) {
+              domainEntry.reports.push({
+                critical: impactCounts.critical,
+                serious: impactCounts.serious,
+                moderate: impactCounts.moderate,
+                minor: impactCounts.minor,
+                filePath: reportUrl
+              });
             }
             
             // 寫入更新後的 db.json

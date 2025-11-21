@@ -33,12 +33,17 @@ describe("Cypress Axe CI 測試", () => {
 
     cy.visit(encodeURI(page));
     cy.injectAxe();
+    
+    // 使用 alias 來追蹤是否有 violations
+    cy.wrap(false).as('hasViolations');
+    
     cy.checkA11y(
       null, 
       { 
         skipFailures: true,
       }, 
       (violations) => {
+        cy.wrap(true).as('hasViolations');
         // 為新的 violations 加上頁面資訊
         const violationsWithPage = violations.map(violation => ({
           ...violation,
@@ -56,7 +61,21 @@ describe("Cypress Axe CI 測試", () => {
           cy.writeFile(a11yReportFilePath, mergedData);
         });
       }
-    );
+    ).then(() => {
+      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
+      cy.get('@hasViolations').then((hasViolations) => {
+        if (!hasViolations) {
+          cy.task('readAndMergeJson', {
+            page,
+            filePath: a11yReportFilePath,
+            newData: []
+          }).then((mergedData) => {
+            // 寫入合併後的資料
+            cy.writeFile(a11yReportFilePath, mergedData);
+          });
+        }
+      });
+    });
   });
   
   it('Axe: 關於我們', () => {
@@ -65,12 +84,17 @@ describe("Cypress Axe CI 測試", () => {
     
     cy.visit(encodeURI(page));
     cy.injectAxe();
+    
+    // 使用 alias 來追蹤是否有 violations
+    cy.wrap(false).as('hasViolations');
+    
     cy.checkA11y(
       null, 
       { 
         skipFailures: true,
       }, 
       (violations) => {
+        cy.wrap(true).as('hasViolations');
         // 為新的 violations 加上頁面資訊
         const violationsWithPage = violations.map(violation => ({
           ...violation,
@@ -88,7 +112,21 @@ describe("Cypress Axe CI 測試", () => {
           cy.writeFile(a11yReportFilePath, mergedData);
         });
       }
-    );
+    ).then(() => {
+      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
+      cy.get('@hasViolations').then((hasViolations) => {
+        if (!hasViolations) {
+          cy.task('readAndMergeJson', {
+            page,
+            filePath: a11yReportFilePath,
+            newData: []
+          }).then((mergedData) => {
+            // 寫入合併後的資料
+            cy.writeFile(a11yReportFilePath, mergedData);
+          });
+        }
+      });
+    });
   });
 
 });
