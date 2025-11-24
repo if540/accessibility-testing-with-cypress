@@ -41,7 +41,7 @@ jobs:
           version: 8
 
       - name: Print payload
-        run: echo ${toJson(github.event.client_payload) || 'no payload'}
+        run: echo "${{ toJson(github.event.client_payload) || 'no payload' }}"
 
       # 先清除舊的 pnpm store 快取
       - name: Remove old pnpm store cache
