@@ -1,6 +1,9 @@
 name: Moda Gov A11y
 
 on:
+  repository_dispatch:
+    types: [gitlab-merge]
+
   workflow_dispatch:
     inputs:
       clean_cache:
@@ -23,6 +26,11 @@ on:
 jobs:
   a11y-moda-gov-tw:
     runs-on: ubuntu-latest
+    env: 
+      clean_cache: ${{ github.event.inputs.clean_cache || 'false' }}
+      keep_report_files: ${{ github.event.inputs.keep_report_files || 'true' }}
+      base_url: ${{ github.event.inputs.base_url || 'https://moda.gov.tw' }}
+      spec_file: ${{ github.event.inputs.spec_file || 'moda-gov-tw.spec.cy.js' }}
     steps:
       # 1️⃣ Checkout repo
       - uses: actions/checkout@v4
@@ -34,7 +42,7 @@ jobs:
 
       # 先清除舊的 pnpm store 快取
       - name: Remove old pnpm store cache
-        if: ${{ github.event.inputs.clean_cache == 'true' }}
+        if: ${{ env.clean_cache == 'true' }}
         run: rm -rf ~/.local/share/pnpm/store
 
       # 快取 pnpm store
@@ -53,10 +61,11 @@ jobs:
       - name: Fetch reports-data/db.json from gh-pages
         run: |
           curl -L https://github.com/if540/accessibility-testing-with-cypress/raw/gh-pages/reports-data/db.json -o public/data/db.json
+          echo ${github.event.client_payload || 'no payload'}
 
       # 5️⃣ Cypress + axe 測試
       - name: Run Accessibility Tests
-        run: pnpm exec cross-env CYPRESS_BASE_URL=${{ github.event.inputs.base_url }}/ cypress run --spec 'cypress/e2e/sites/**/${{ github.event.inputs.spec_file }}' --headless
+        run: pnpm exec cross-env CYPRESS_BASE_URL=${{ env.base_url }}/ cypress run --spec 'cypress/e2e/sites/**/${{ env.spec_file }}' --headless
         continue-on-error: true
 
       # 6️⃣ 部署 Cypress report 到 gh-pages/a11y-reports
@@ -66,7 +75,7 @@ jobs:
           github_token: ${{ secrets.GH_PAT }}
           publish_dir: cypress/reports
           destination_dir: a11y-reports
-          keep_files: ${{ github.event.inputs.keep_report_files == 'true' }}
+          keep_files: ${{ env.keep_report_files == 'true' }}
           commit_message: "Deploy A11y Reports [skip ci]"
 
       # 7️⃣ 部署 db.json
