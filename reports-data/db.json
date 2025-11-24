@@ -29,7 +29,7 @@
     },
     {
         "domainName": "moda-gov-tw",
-        "lastRun": "2025-11-21 18:27:00",
+        "lastRun": "2025-11-25 24:09:00",
         "critical": 0,
         "serious": 0,
         "moderate": 7,
@@ -43,6 +43,15 @@
                 "minor": 0,
                 "lastRun": "2025-11-21 18:27:00",
                 "filePath": "/moda-gov-tw/202511211826.json"
+            },
+            {
+                "id": "202511250009",
+                "critical": 0,
+                "serious": 0,
+                "moderate": 7,
+                "minor": 0,
+                "lastRun": "2025-11-25 24:09:00",
+                "filePath": "/moda-gov-tw/202511250009.json"
             }
         ]
     }
