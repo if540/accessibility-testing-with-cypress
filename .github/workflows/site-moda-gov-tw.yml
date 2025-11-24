@@ -31,6 +31,7 @@ jobs:
       keep_report_files: ${{ github.event.inputs.keep_report_files || 'true' }}
       base_url: ${{ github.event.inputs.base_url || 'https://moda.gov.tw' }}
       spec_file: ${{ github.event.inputs.spec_file || 'moda-gov-tw.spec.cy.js' }}
+      payload: ${{ toJson(github.event.client_payload) || 'no payload' }}
     steps:
       # 1️⃣ Checkout repo
       - uses: actions/checkout@v4
@@ -41,7 +42,9 @@ jobs:
           version: 8
 
       - name: Print payload
-        run: echo "${{ toJson(github.event.client_payload) || 'no payload' }}"
+        run: |
+          echo "payload: ${env.payload}"
+          echo "from_gitlab: ${env.payload.from_gitlab}"
 
       # 先清除舊的 pnpm store 快取
       - name: Remove old pnpm store cache
