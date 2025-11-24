@@ -40,6 +40,9 @@ jobs:
         with:
           version: 8
 
+      - name: Print payload
+        run: echo ${toJson(github.event.client_payload) || 'no payload'}
+
       # 先清除舊的 pnpm store 快取
       - name: Remove old pnpm store cache
         if: ${{ env.clean_cache == 'true' }}
@@ -61,7 +64,6 @@ jobs:
       - name: Fetch reports-data/db.json from gh-pages
         run: |
           curl -L https://github.com/if540/accessibility-testing-with-cypress/raw/gh-pages/reports-data/db.json -o public/data/db.json
-          echo ${github.event.client_payload || 'no payload'}
 
       # 5️⃣ Cypress + axe 測試
       - name: Run Accessibility Tests
