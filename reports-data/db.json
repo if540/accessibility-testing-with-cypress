@@ -22,5 +22,29 @@
                 "filePath": "/moda-gov-tw/202511251922.json"
             }
         ]
+    },
+    {
+        "id": "2025-11-25_19-25",
+        "domainName": "if540-github-io",
+        "reportFilePath": "if540-github-io-accessibility-testing-with-cypress-react-app",
+        "siteUrl": "https://if540.github.io/accessibility-testing-with-cypress/react-app",
+        "lastRun": "2025-11-25 19:25:00",
+        "critical": 2,
+        "serious": 2,
+        "moderate": 0,
+        "minor": 0,
+        "reports": [
+            {
+                "id": "202511251925",
+                "siteUrl": "https://if540.github.io/accessibility-testing-with-cypress/react-app",
+                "reportFilePath": "if540-github-io-accessibility-testing-with-cypress-react-app",
+                "critical": 2,
+                "serious": 2,
+                "moderate": 0,
+                "minor": 0,
+                "lastRun": "2025-11-25 19:25:00",
+                "filePath": "/if540-github-io-accessibility-testing-with-cypress-react-app/202511251925.json"
+            }
+        ]
     }
 ]
