@@ -36,7 +36,7 @@ jobs:
       clean_cache: ${{ github.event.inputs.clean_cache }}
       keep_report_files: ${{ github.event.inputs.keep_report_files }}
       base_url: ${{ github.event.inputs.base_url }}
-      spec_file: ${{ github.event.inputs.spec_file || (env.base_url && format('{0}.spec.cy.js', replace(replace(replace(env.base_url, 'https://', ''), 'http://', ''), '.', '-'))) }}
+      spec_file: ${{ github.event.inputs.spec_file || (github.event.inputs.base_url && format('{0}.spec.cy.js', replace(replace(replace(github.event.inputs.base_url, 'https://', ''), 'http://', ''), '.', '-'))) }}
     # 0️⃣ 為前置作業
     steps:
       # 0️⃣ Checkout repo
