@@ -1,26 +1,2 @@
 [
-    {
-        "id": "2025-11-25_13-42",
-        "domainName": "if540-github-io",
-        "reportFilePath": "if540-github-io--accessibility-testing-with-cypress--react-app--",
-        "siteUrl": "https://if540.github.io/accessibility-testing-with-cypress/react-app/",
-        "lastRun": "2025-11-25 13:42:00",
-        "critical": 2,
-        "serious": 1,
-        "moderate": 0,
-        "minor": 0,
-        "reports": [
-            {
-                "id": "202511251342",
-                "siteUrl": "https://if540.github.io/accessibility-testing-with-cypress/react-app/",
-                "reportFilePath": "if540-github-io--accessibility-testing-with-cypress--react-app--",
-                "critical": 2,
-                "serious": 1,
-                "moderate": 0,
-                "minor": 0,
-                "lastRun": "2025-11-25 13:42:00",
-                "filePath": "/if540-github-io--accessibility-testing-with-cypress--react-app--/202511251342.json"
-            }
-        ]
-    }
 ]
