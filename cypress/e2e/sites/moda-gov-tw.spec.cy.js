@@ -3,299 +3,42 @@
 /* eslint-disable jest/valid-expect, no-unused-expressions */
 
 const parseUrlToSafeNames = require('../../utils/a11y/parse-url-to-safe-names');
+const getTaipeiTimestamp = require('../../utils/a11y/get-taipei-timestamp');
+
+const pages = [
+  {
+    path: '/',
+    title: '首頁'
+  },
+  {
+    path: '/aboutus/402',
+    title: '關於moda'
+  },
+  {
+    path: '/press/370',
+    title: '公告資訊總覽'
+  },
+  {
+    path: '/press/bulletin/1179',
+    title: '公告資訊-行政公告-列表'
+  },
+  {
+    path: '/sitemap/546',
+    title: '網站導覽'
+  },
+  {
+    path: '/aboutus/organization/620',
+    title: '組織架構'
+  }
+]
 
 describe("Moda Gov A11y", () => {
-
   const { safeReportFilePathName } = parseUrlToSafeNames(Cypress.config('baseUrl'));
+  const a11yReportFilePath = `cypress/reports/${safeReportFilePathName}/${getTaipeiTimestamp().compact}.json`;
 
-  // 產生 yyyy-mm-dd_HH-MM-ss 格式的 timestamp (台北時間 UTC+8)
-  const date = new Date();
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Taipei',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
-  const parts = formatter.formatToParts(date);
-  const year = parts.find(p => p.type === 'year').value;
-  const month = parts.find(p => p.type === 'month').value;
-  const day = parts.find(p => p.type === 'day').value;
-  const hour = parts.find(p => p.type === 'hour').value;
-  const minute = parts.find(p => p.type === 'minute').value;
-  const timestamp = `${year}${month}${day}${hour}${minute}`;
-  const a11yReportFilePath = `cypress/reports/${safeReportFilePathName}/${timestamp}.json`;
-
-  it('首頁', () => {
-    const page = "/";
-    const testName = Cypress.currentTest.title;
-
-    cy.visit(encodeURI(page));
-    cy.injectAxe();
-    
-    // 使用 alias 來追蹤是否有 violations
-    cy.wrap(false).as('hasViolations');
-    
-    cy.checkA11y(
-      null, 
-      { 
-        skipFailures: true,
-      }, 
-      (violations) => {
-        cy.wrap(true).as('hasViolations');
-        // 為新的 violations 加上頁面資訊
-        const violationsWithPage = violations.map(violation => ({
-          ...violation,
-          page,
-          testName
-        }));
-        
-        // 使用 task 讀取並合併檔案
-        cy.task('readAndMergeJson', {
-          page,
-          filePath: a11yReportFilePath,
-          newData: violationsWithPage
-        });
-      }
-    ).then(() => {
-      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
-      cy.get('@hasViolations').then((hasViolations) => {
-        if (!hasViolations) {
-          cy.task('readAndMergeJson', {
-            page,
-            filePath: a11yReportFilePath,
-            newData: []
-          });
-        }
-      });
+  pages.forEach((page) => {
+    it(page.title, () => {
+        cy.checkA11yAndReport(page.path, a11yReportFilePath);
     });
   });
-  
-  it('關於moda', () => {
-    const page = "/aboutus/402";
-    const testName = Cypress.currentTest.title;
-    
-    cy.visit(encodeURI(page));
-    cy.injectAxe();
-    
-    // 使用 alias 來追蹤是否有 violations
-    cy.wrap(false).as('hasViolations');
-    
-    cy.checkA11y(
-      null, 
-      { 
-        skipFailures: true,
-      }, 
-      (violations) => {
-        cy.wrap(true).as('hasViolations');
-        // 為新的 violations 加上頁面資訊
-        const violationsWithPage = violations.map(violation => ({
-          ...violation,
-          page,
-          testName
-        }));
-        
-        // 使用 task 讀取並合併檔案
-        cy.task('readAndMergeJson', {
-          page,
-          filePath: a11yReportFilePath,
-          newData: violationsWithPage
-        });
-      }
-    ).then(() => {
-      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
-      cy.get('@hasViolations').then((hasViolations) => {
-        if (!hasViolations) {
-          cy.task('readAndMergeJson', {
-            page,
-            filePath: a11yReportFilePath,
-            newData: []
-          });
-        }
-      });
-    });
-  });
-
-  it('公告資訊總覽', () => {
-    const page = "/press/370";
-    const testName = Cypress.currentTest.title;
-    
-    cy.visit(encodeURI(page));
-    cy.injectAxe();
-    
-    // 使用 alias 來追蹤是否有 violations
-    cy.wrap(false).as('hasViolations');
-    
-    cy.checkA11y(
-      null, 
-      { 
-        skipFailures: true,
-      }, 
-      (violations) => {
-        cy.wrap(true).as('hasViolations');
-        // 為新的 violations 加上頁面資訊
-        const violationsWithPage = violations.map(violation => ({
-          ...violation,
-          page,
-          testName
-        }));
-        
-        // 使用 task 讀取並合併檔案
-        cy.task('readAndMergeJson', {
-          page,
-          filePath: a11yReportFilePath,
-          newData: violationsWithPage
-        });
-      }
-    ).then(() => {
-      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
-      cy.get('@hasViolations').then((hasViolations) => {
-        if (!hasViolations) {
-          cy.task('readAndMergeJson', {
-            page,
-            filePath: a11yReportFilePath,
-            newData: []
-          });
-        }
-      });
-    });
-  });
-
-  it('公告資訊-行政公告-列表', () => {
-    const page = "/press/bulletin/1179";
-    const testName = Cypress.currentTest.title;
-    
-    cy.visit(encodeURI(page));
-    cy.injectAxe();
-    
-    // 使用 alias 來追蹤是否有 violations
-    cy.wrap(false).as('hasViolations');
-    
-    cy.checkA11y(
-      null, 
-      { 
-        skipFailures: true,
-      }, 
-      (violations) => {
-        cy.wrap(true).as('hasViolations');
-        // 為新的 violations 加上頁面資訊
-        const violationsWithPage = violations.map(violation => ({
-          ...violation,
-          page,
-          testName
-        }));
-        
-        // 使用 task 讀取並合併檔案
-        cy.task('readAndMergeJson', {
-          page,
-          filePath: a11yReportFilePath,
-          newData: violationsWithPage
-        });
-      }
-    ).then(() => {
-      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
-      cy.get('@hasViolations').then((hasViolations) => {
-        if (!hasViolations) {
-          cy.task('readAndMergeJson', {
-            page,
-            filePath: a11yReportFilePath,
-            newData: []
-          });
-        }
-      });
-    });
-  });
-
-  it('網站導覽', () => {
-    const page = "/sitemap/546";
-    const testName = Cypress.currentTest.title;
-    
-    cy.visit(encodeURI(page));
-    cy.injectAxe();
-    
-    // 使用 alias 來追蹤是否有 violations
-    cy.wrap(false).as('hasViolations');
-    
-    cy.checkA11y(
-      null, 
-      { 
-        skipFailures: true,
-      }, 
-      (violations) => {
-        cy.wrap(true).as('hasViolations');
-        // 為新的 violations 加上頁面資訊
-        const violationsWithPage = violations.map(violation => ({
-          ...violation,
-          page,
-          testName
-        }));
-        
-        // 使用 task 讀取並合併檔案
-        cy.task('readAndMergeJson', {
-          page,
-          filePath: a11yReportFilePath,
-          newData: violationsWithPage
-        });
-      }
-    ).then(() => {
-      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
-      cy.get('@hasViolations').then((hasViolations) => {
-        if (!hasViolations) {
-          cy.task('readAndMergeJson', {
-            page,
-            filePath: a11yReportFilePath,
-            newData: []
-          });
-        }
-      });
-    });
-  });
-
-  it('組織架構', () => {
-    const page = "/aboutus/organization/620";
-    const testName = Cypress.currentTest.title;
-    
-    cy.visit(encodeURI(page));
-    cy.injectAxe();
-    
-    // 使用 alias 來追蹤是否有 violations
-    cy.wrap(false).as('hasViolations');
-    
-    cy.checkA11y(
-      null, 
-      { 
-        skipFailures: true,
-      }, 
-      (violations) => {
-        cy.wrap(true).as('hasViolations');
-        // 為新的 violations 加上頁面資訊
-        const violationsWithPage = violations.map(violation => ({
-          ...violation,
-          page,
-          testName
-        }));
-        
-        // 使用 task 讀取並合併檔案
-        cy.task('readAndMergeJson', {
-          page,
-          filePath: a11yReportFilePath,
-          newData: violationsWithPage
-        });
-      }
-    ).then(() => {
-      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
-      cy.get('@hasViolations').then((hasViolations) => {
-        if (!hasViolations) {
-          cy.task('readAndMergeJson', {
-            page,
-            filePath: a11yReportFilePath,
-            newData: []
-          });
-        }
-      });
-    });
-  });
-
 });

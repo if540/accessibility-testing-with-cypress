@@ -230,6 +230,69 @@ Cypress.Commands.add('checkA11yViolationsDetails', (violations, testName) => {
 });
 
 /**
+ * 自定義命令：執行無障礙測試並記錄結果
+ * @param {string} page - 要測試的頁面路徑
+ * @param {string} a11yReportFilePath - 報告檔案路徑
+ * @param {Object} options - 選項
+ * @param {boolean} options.skipFailures - 是否跳過失敗，預設 true
+ * @example
+ * cy.checkA11yAndReport('/#/example', 'cypress/reports/example.json');
+ */
+Cypress.Commands.add('checkA11yAndReport', (page, a11yReportFilePath, options = {}) => {
+  const { skipFailures = true } = options;
+  const testName = Cypress.currentTest.title;
+
+  cy.visit(encodeURI(page));
+
+  // [關鍵] 等待 App 準備完成
+  cy.window().then((win) => {
+    if(win.document.readyState === 'complete') {
+      // cy.get('[data-app-ready]', { timeout: 10000 }).should('exist');
+      cy.wait(10);
+    }
+  });
+
+  cy.injectAxe();
+  
+  // 使用 alias 來追蹤是否有 violations
+  cy.wrap(false).as('hasViolations');
+  
+  cy.checkA11y(
+    null, 
+    { 
+      skipFailures,
+    }, 
+    (violations) => {
+      cy.wrap(true).as('hasViolations');
+      // 為新的 violations 加上頁面資訊
+      const violationsWithPage = violations.map(violation => ({
+        ...violation,
+        page,
+        testName
+      }));
+      
+      // 使用 task 讀取並合併檔案
+      cy.task('readAndMergeJson', {
+        page,
+        filePath: a11yReportFilePath,
+        newData: violationsWithPage
+      });
+    }
+  ).then(() => {
+    // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
+    cy.get('@hasViolations').then((hasViolations) => {
+      if (!hasViolations) {
+        cy.task('readAndMergeJson', {
+          page,
+          filePath: a11yReportFilePath,
+          newData: []
+        });
+      }
+    });
+  });
+});
+
+/**
  * 自定義命令：增強的錯誤捕獲和報告
  */
 // Cypress.Commands.add('captureFailureDetails', (testName, error) => {
