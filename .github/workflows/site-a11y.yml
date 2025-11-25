@@ -17,7 +17,7 @@ on:
         required: true
         default: 'true'
       base_url:
-        description: '測試站點的 base URL(請填完整網址，例如：https://moda.gov.tw、http://localhost:3000)(目前不接受子路徑, 例如：https://www.xxx.xx/demoSite → www-xxx-xx.spec.cy.js)'
+        description: '測試站點的 base URL(請填完整網址，例如：https://moda.gov.tw、http://website.com:3000)(必須要有對應測試檔案)'
         required: true
         default: 'https://moda.gov.tw'
         type: choice
@@ -25,7 +25,7 @@ on:
           - 'https://moda.gov.tw'
           - 'https://if540.github.io/accessibility-testing-with-cypress/react-app'
       spec_file:
-        description: '測試檔案(可空，預設為 {base_url}.spec.cy.js, 例如：https://moda.gov.tw → moda-gov-tw.spec.cy.js)'
+        description: '測試檔案(可空，預設為 {base_url}.spec.cy.js, 例如：https://moda.gov.tw → moda-gov-tw.spec.cy.js, http://website.com:3000 → website-com---3000.spec.cy.js, https://if540.github.io/accessibility-testing-with-cypress/react-app → if540-github-io--accessibility-testing-with-cypress--react-app.spec.cy.js)'
         required: false
         default: ''
 
