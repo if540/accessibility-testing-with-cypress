@@ -1,0 +1,380 @@
+{
+  "id": "2025-11-25_13-53",
+  "siteUrl": "https://moda.gov.tw",
+  "domainName": "moda-gov-tw",
+  "reportFilePath": "moda-gov-tw",
+  "lastRun": "2025-11-25 13:52:00",
+  "pages": {
+    "/": [
+      {
+        "id": "landmark-contentinfo-is-top-level",
+        "impact": "moderate",
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the contentinfo landmark is at top level",
+        "help": "Contentinfo landmark should not be contained in another landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-contentinfo-is-top-level?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "landmark-is-top-level",
+                "data": {
+                  "role": "contentinfo"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "The contentinfo landmark is contained in another landmark."
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<section class=\"idxNews aos-init aos-animate\" data-aos=\"fade-up\" role=\"contentinfo\" aria-label=\"公告訊息\">",
+            "target": [
+              ".idxNews"
+            ],
+            "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-top-level",
+                "data": {
+                  "role": "contentinfo"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "The contentinfo landmark is contained in another landmark."
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<section class=\"idxIssue aos-init\" data-aos=\"fade-up\" role=\"contentinfo\" aria-label=\"政策推動\">",
+            "target": [
+              ".idxIssue"
+            ],
+            "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-top-level",
+                "data": {
+                  "role": "contentinfo"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "The contentinfo landmark is contained in another landmark."
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<section class=\"idxPartner aos-init\" data-aos=\"fade-up\" role=\"contentinfo\" aria-label=\"相關連結\">",
+            "target": [
+              ".idxPartner"
+            ],
+            "failureSummary": "Fix any of the following:\n  The contentinfo landmark is contained in another landmark."
+          }
+        ],
+        "page": "/",
+        "testName": "首頁"
+      },
+      {
+        "id": "landmark-no-duplicate-contentinfo",
+        "impact": "moderate",
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the document has at most one contentinfo landmark",
+        "help": "Document should not have more than one contentinfo landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-no-duplicate-contentinfo?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "page-no-duplicate-contentinfo",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<section class=\"idxIssue aos-init\" data-aos=\"fade-up\" role=\"contentinfo\" aria-label=\"政策推動\">",
+                    "target": [
+                      ".idxIssue"
+                    ]
+                  },
+                  {
+                    "html": "<section class=\"idxPartner aos-init\" data-aos=\"fade-up\" role=\"contentinfo\" aria-label=\"相關連結\">",
+                    "target": [
+                      ".idxPartner"
+                    ]
+                  },
+                  {
+                    "html": "<footer b-cc24bo3soz=\"\" class=\"ft mt-auto footer\" data-nosnippet=\"\">",
+                    "target": [
+                      "footer"
+                    ]
+                  }
+                ],
+                "impact": "moderate",
+                "message": "Document has more than one contentinfo landmark"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<section class=\"idxNews aos-init aos-animate\" data-aos=\"fade-up\" role=\"contentinfo\" aria-label=\"公告訊息\">",
+            "target": [
+              ".idxNews"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document has more than one contentinfo landmark"
+          }
+        ],
+        "page": "/",
+        "testName": "首頁"
+      },
+      {
+        "id": "region",
+        "impact": "moderate",
+        "tags": [
+          "cat.keyboard",
+          "best-practice",
+          "RGAAv4",
+          "RGAA-9.2.1"
+        ],
+        "description": "Ensure all page content is contained by landmarks",
+        "help": "All page content should be contained by landmarks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Some page content is not contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<span b-cc24bo3soz=\"\" class=\"visually-hidden\">網站顏色切換</span>",
+            "target": [
+              ".themeNav > .visually-hidden[b-cc24bo3soz=\"\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+          }
+        ],
+        "page": "/",
+        "testName": "首頁"
+      }
+    ],
+    "/aboutus/402": [
+      {
+        "id": "region",
+        "impact": "moderate",
+        "tags": [
+          "cat.keyboard",
+          "best-practice",
+          "RGAAv4",
+          "RGAA-9.2.1"
+        ],
+        "description": "Ensure all page content is contained by landmarks",
+        "help": "All page content should be contained by landmarks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Some page content is not contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<span b-cc24bo3soz=\"\" class=\"visually-hidden\">網站顏色切換</span>",
+            "target": [
+              ".themeNav > .visually-hidden"
+            ],
+            "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+          }
+        ],
+        "page": "/aboutus/402",
+        "testName": "關於moda"
+      }
+    ],
+    "/press/370": [
+      {
+        "id": "region",
+        "impact": "moderate",
+        "tags": [
+          "cat.keyboard",
+          "best-practice",
+          "RGAAv4",
+          "RGAA-9.2.1"
+        ],
+        "description": "Ensure all page content is contained by landmarks",
+        "help": "All page content should be contained by landmarks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Some page content is not contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<span b-cc24bo3soz=\"\" class=\"visually-hidden\">網站顏色切換</span>",
+            "target": [
+              ".themeNav > .visually-hidden"
+            ],
+            "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+          }
+        ],
+        "page": "/press/370",
+        "testName": "公告資訊總覽"
+      }
+    ],
+    "/press/bulletin/1179": [
+      {
+        "id": "region",
+        "impact": "moderate",
+        "tags": [
+          "cat.keyboard",
+          "best-practice",
+          "RGAAv4",
+          "RGAA-9.2.1"
+        ],
+        "description": "Ensure all page content is contained by landmarks",
+        "help": "All page content should be contained by landmarks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Some page content is not contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<span b-cc24bo3soz=\"\" class=\"visually-hidden\">網站顏色切換</span>",
+            "target": [
+              ".themeNav > .visually-hidden[b-cc24bo3soz=\"\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+          }
+        ],
+        "page": "/press/bulletin/1179",
+        "testName": "公告資訊-行政公告-列表"
+      }
+    ],
+    "/sitemap/546": [
+      {
+        "id": "region",
+        "impact": "moderate",
+        "tags": [
+          "cat.keyboard",
+          "best-practice",
+          "RGAAv4",
+          "RGAA-9.2.1"
+        ],
+        "description": "Ensure all page content is contained by landmarks",
+        "help": "All page content should be contained by landmarks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Some page content is not contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<span b-cc24bo3soz=\"\" class=\"visually-hidden\">網站顏色切換</span>",
+            "target": [
+              ".themeNav > .visually-hidden[b-cc24bo3soz=\"\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+          }
+        ],
+        "page": "/sitemap/546",
+        "testName": "網站導覽"
+      }
+    ],
+    "/aboutus/organization/620": [
+      {
+        "id": "region",
+        "impact": "moderate",
+        "tags": [
+          "cat.keyboard",
+          "best-practice",
+          "RGAAv4",
+          "RGAA-9.2.1"
+        ],
+        "description": "Ensure all page content is contained by landmarks",
+        "help": "All page content should be contained by landmarks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Some page content is not contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "moderate",
+            "html": "<span b-cc24bo3soz=\"\" class=\"visually-hidden\">網站顏色切換</span>",
+            "target": [
+              ".themeNav > .visually-hidden"
+            ],
+            "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+          }
+        ],
+        "page": "/aboutus/organization/620",
+        "testName": "組織架構"
+      }
+    ]
+  }
+}
