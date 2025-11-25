@@ -9,8 +9,9 @@ function parseUrlToSafeNames(url, defaultBaseUrl = 'http://localhost:3000') {
   const parsedUrl = new URL(baseUrl);
   const hostname = parsedUrl.hostname;
   const safeHostname = hostname.replace(/\./g, '-');
-  const safePathname = parsedUrl.pathname.replace(/\//g, '-');
-  const safeReportFilePathName = `${safeHostname}${safePathname == '-' ? '' : '-' + safePathname}${parsedUrl.port ? '---' + parsedUrl.port : ''}`;
+  const safePathname = parsedUrl.pathname.replace(/\//g, '--');
+  const safePort = parsedUrl.port ? '---' + parsedUrl.port : '';
+  const safeReportFilePathName = `${safeHostname}${safePathname === '--' ? '' : safePathname}${safePort}`;
   
   return {
     baseUrl,
