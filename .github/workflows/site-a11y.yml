@@ -1,5 +1,7 @@
 name: Site Accessibility Check
 
+run-name: ${{ github.event_name == 'repository_dispatch' && 'GitLab 觸發' || format('手動觸發 - {0}', github.event.inputs.base_url || '預設') }}
+
 on:
   repository_dispatch:
     types: [gitlab-merge]
