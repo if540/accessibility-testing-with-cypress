@@ -34,9 +34,17 @@ jobs:
       clean_cache: ${{ github.event.inputs.clean_cache }}
       keep_report_files: ${{ github.event.inputs.keep_report_files }}
       base_url: ${{ github.event.inputs.base_url }}
-      spec_file: ${{ github.event.inputs.spec_file || (github.event.inputs.base_url && format('{0}.spec.cy.js', replace(replace(replace(github.event.inputs.base_url, 'https://', ''), 'http://', ''), '.', '-'))) }}
     # 0️⃣ 為前置作業
     steps:
+      - name: 設定 spec_file
+        run: |
+          if [ -n "${{ github.event.inputs.spec_file }}" ]; then
+            echo "spec_file=${{ github.event.inputs.spec_file }}" >> $GITHUB_ENV
+          elif [ -n "${{ github.event.inputs.base_url }}" ]; then
+            SPEC_FILE=$(echo "${{ github.event.inputs.base_url }}" | sed 's|https\?://||' | sed 's|\.|-|g' | sed 's|$|.spec.cy.js|')
+            echo "spec_file=${SPEC_FILE}" >> $GITHUB_ENV
+          fi
+
       # 0️⃣ Checkout repo
       - uses: actions/checkout@v4
 
