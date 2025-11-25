@@ -28,9 +28,9 @@
         "domainName": "moda-gov-tw",
         "reportFilePath": "moda-gov-tw",
         "siteUrl": "https://moda.gov.tw",
-        "lastRun": "2025-11-25 13:48:00",
+        "lastRun": "2025-11-25 13:53:00",
         "critical": 0,
-        "serious": 1,
+        "serious": 0,
         "moderate": 8,
         "minor": 0,
         "reports": [
@@ -44,6 +44,17 @@
                 "minor": 0,
                 "lastRun": "2025-11-25 13:48:00",
                 "filePath": "/moda-gov-tw/202511251348.json"
+            },
+            {
+                "id": "202511251352",
+                "siteUrl": "https://moda.gov.tw",
+                "reportFilePath": "moda-gov-tw",
+                "critical": 0,
+                "serious": 0,
+                "moderate": 8,
+                "minor": 0,
+                "lastRun": "2025-11-25 13:53:00",
+                "filePath": "/moda-gov-tw/202511251352.json"
             }
         ]
     }
