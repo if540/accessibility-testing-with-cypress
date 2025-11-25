@@ -2,14 +2,13 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="row">
-      <div className="col-md-5 mx-auto">
+    <div className="col-span-12 bg-secondary">
         <form className="m-4">
           <img
             src={`${process.env.PUBLIC_URL}/logo.png`}
             alt="圖"
             width="50%"
-            className="d-block mx-auto mb-4"
+            className="block mx-auto mb-4"
           />
           <div className="mb-3">
             <h1 className="h3 mb-3 font-weight-normal text-center">
@@ -120,19 +119,19 @@ function Home() {
         <img
           src="https://placehold.co/125x100"
           width="50%"
-          className="d-block mx-auto mb-4"
+          className="block mx-auto mb-4"
         />
         <img
           src="https://placehold.co/125x100"
           width="50%"
-          className="d-block mx-auto mb-4"
+          className="block mx-auto mb-4"
           alt="圖片"
         />
         <a href="#">
           <img
             src="https://placehold.co/125x100"
             width="50%"
-            className="d-block mx-auto mb-4"
+            className="block mx-auto mb-4"
             alt=""
           />
         </a>
@@ -162,7 +161,6 @@ function Home() {
             <td>休館</td>
           </tr>
         </table>
-      </div>
     </div>
   );
 }

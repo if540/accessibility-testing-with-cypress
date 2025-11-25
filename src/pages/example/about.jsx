@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 function About() {
+  const navigate = useNavigate();
+
   return (
-    <div className="row">
-      <div className="col-md-8 mx-auto">
+    <div className="col-span-12 bg-secondary">
         <div className="m-4">
-          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" width="200" className="d-block mx-auto mb-4"/>
+          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" width="200" className="block mx-auto mb-4"/>
           <h1 className="h1 mb-4 text-center">關於我們</h1>
           
           <div className="content">
@@ -29,9 +31,22 @@ function About() {
             </p>
             
             <div className="text-center mt-5">
-              <Link to="/example" className="btn btn-primary">
-                返回錯誤範例頁面
-              </Link>
+
+              <Button variant="outline" asChild>
+                <Link to="/example">
+                  返回錯誤範例頁面(Link type)
+                </Link>
+              </Button>
+
+              <Button
+                variant="default"
+                type="button"
+                onClick={() => {
+                  navigate('/example');
+                }}
+              >
+                返回錯誤範例頁面（Button type）
+              </Button>
             </div>
           </div>
 
@@ -60,7 +75,6 @@ function About() {
             </tbody>
           </table>
         </div>
-      </div>
     </div>
   );
 }

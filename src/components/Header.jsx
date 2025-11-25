@@ -2,23 +2,12 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div className="container">
-          <Link className="navbar-brand" to="/">
-            <img
-              src={`${process.env.PUBLIC_URL}/logo.png`}
-              alt="Logo"
-              width="30"
-              height="30"
-              className="me-2"
-            />
-            無障礙網站測試
-          </Link>
-          <div className="navbar-nav">
-            <Link className="nav-link" to="/example">錯誤範例</Link>
-          </div>
-        </div>
-      </nav>
+    <nav className="col-span-1 p-4 flex justify-between items-center max-auto">
+      <Link to="/" className="flex items-center gap-2">
+        <h1 className="text-base font-bold">無障礙網站測試</h1>
+      </Link>
+      <Link to="/example">錯誤範例</Link>
+    </nav>
   );
 }
 

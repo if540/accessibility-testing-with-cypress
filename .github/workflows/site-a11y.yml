@@ -24,6 +24,7 @@ on:
         options:
           - 'https://moda.gov.tw'
           - 'https://if540.github.io/accessibility-testing-with-cypress/react-app'
+          - 'https://cabcy.chiayi.gov.tw'
       spec_file:
         description: '測試檔案(可空，預設為 {base_url}.spec.cy.js, 例如：https://moda.gov.tw → moda-gov-tw.spec.cy.js, http://website.com:3000 → website-com---3000.spec.cy.js, https://if540.github.io/accessibility-testing-with-cypress/react-app → if540-github-io--accessibility-testing-with-cypress--react-app.spec.cy.js)'
         required: false

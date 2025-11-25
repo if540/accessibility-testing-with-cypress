@@ -1,13 +1,22 @@
 import SiteList from "../../components/SiteList";
+import { useQuery } from '@tanstack/react-query';
+import { sitesApi } from '../../api';
 
-function Home() {
+function HomeIndex() {
+
+  const { data: sites = [], isLoading, error } = useQuery({
+    queryKey: sitesApi.queryKey,
+    queryFn: sitesApi.queryFn,
+    staleTime: Infinity,
+  });
+  
   return (
-    <div className="row">
-      <div className="col-md-5 mx-auto text-center">
-        <SiteList />
-      </div>
-    </div>
+    <>
+      {isLoading && <div>Loading...</div>}
+      {error && <div>Error: {error.message}</div>}
+      {sites.length > 0 && <SiteList sites={sites} />}
+    </>
   );
 }
 
-export default Home;
+export default HomeIndex;
