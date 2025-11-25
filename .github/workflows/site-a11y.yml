@@ -56,9 +56,9 @@ jobs:
       # 0️⃣ 假設 trigger 來自 GitLab，則印出 payload
       - name: Print payload
         run: |
-          echo "payload: ${env.payload}"
-          if [ "${env.payload}" != "no payload" ]; then
-            echo "from_gitlab: ${env.payload.from_gitlab}"
+          echo "payload: ${{ env.payload }}"
+          if [ "${{ env.payload }}" != "no payload" ]; then
+            echo "from_gitlab: $(echo '${{ env.payload }}' | jq -r '.from_gitlab // empty')"
           fi
 
       # 0️⃣ 清除舊的 pnpm store 快取
