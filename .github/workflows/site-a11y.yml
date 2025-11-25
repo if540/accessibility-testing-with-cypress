@@ -42,7 +42,7 @@ jobs:
           if [ -n "${{ github.event.inputs.spec_file }}" ]; then
             echo "spec_file=${{ github.event.inputs.spec_file }}" >> $GITHUB_ENV
           elif [ -n "${{ github.event.inputs.base_url }}" ]; then
-            SPEC_FILE=$(echo "${{ github.event.inputs.base_url }}" | sed 's|https\?://||' | sed 's|:|---|g' | sed 's|\.|-|g' | sed 's|/|--|g' | sed 's|$|.spec.cy.js|')
+            SPEC_FILE=$(echo "${{ github.event.inputs.base_url }}" | sed 's|https\?://||' | sed 's|/$||' | sed 's|:|---|g' | sed 's|\.|-|g' | sed 's|/|--|g' | sed 's|$|.spec.cy.js|')
             echo "spec_file=${SPEC_FILE}" >> $GITHUB_ENV
           fi
 
