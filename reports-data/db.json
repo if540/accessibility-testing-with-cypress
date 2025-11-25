@@ -1,21 +1,2 @@
 [
-    {
-        "domainName": "if540-github-io",
-        "lastRun": "2025-11-25 13:16:00",
-        "critical": 2,
-        "serious": 1,
-        "moderate": 0,
-        "minor": 0,
-        "reports": [
-            {
-                "id": "202511251316",
-                "critical": 2,
-                "serious": 1,
-                "moderate": 0,
-                "minor": 0,
-                "lastRun": "2025-11-25 13:16:00",
-                "filePath": "/if540-github-io--accessibility-testing-with-cypress--react-app--/202511251316.json"
-            }
-        ]
-    }
 ]
