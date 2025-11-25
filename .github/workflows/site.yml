@@ -15,7 +15,7 @@ on:
         required: true
         default: 'true'
       base_url:
-        description: '測試站點的 base URL(請填完整網址，例如：https://moda.gov.tw、http://localhost:3000)'
+        description: '測試站點的 base URL(請填完整網址，例如：https://moda.gov.tw、http://localhost:3000)(目前不接受子路徑, 例如：https://www.xxx.xx/demoSite → www-xxx-xx.spec.cy.js)'
         required: true
         default: 'https://moda.gov.tw'
         type: choice

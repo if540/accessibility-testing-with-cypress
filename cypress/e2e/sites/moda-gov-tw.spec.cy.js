@@ -27,7 +27,7 @@ describe("Moda Gov A11y", () => {
   const timestamp = `${year}${month}${day}${hour}${minute}`;
   const a11yReportFilePath = `cypress/reports/${safeHostname}/${timestamp}.json`;
 
-  it('Axe: 首頁', () => {
+  it('首頁', () => {
     const page = "/";
     const testName = Cypress.currentTest.title;
 
@@ -72,7 +72,7 @@ describe("Moda Gov A11y", () => {
     });
   });
   
-  it('Axe: 關於moda', () => {
+  it('關於moda', () => {
     const page = "/aboutus/402";
     const testName = Cypress.currentTest.title;
     
@@ -117,7 +117,7 @@ describe("Moda Gov A11y", () => {
     });
   });
 
-  it('Axe: 公告資訊總覽', () => {
+  it('公告資訊總覽', () => {
     const page = "/press/370";
     const testName = Cypress.currentTest.title;
     
@@ -162,7 +162,7 @@ describe("Moda Gov A11y", () => {
     });
   });
 
-  it('Axe: 公告資訊-行政公告-列表', () => {
+  it('公告資訊-行政公告-列表', () => {
     const page = "/press/bulletin/1179";
     const testName = Cypress.currentTest.title;
     
@@ -207,8 +207,53 @@ describe("Moda Gov A11y", () => {
     });
   });
 
-  it('Axe: 網站導覽', () => {
+  it('網站導覽', () => {
     const page = "/sitemap/546";
+    const testName = Cypress.currentTest.title;
+    
+    cy.visit(encodeURI(page));
+    cy.injectAxe();
+    
+    // 使用 alias 來追蹤是否有 violations
+    cy.wrap(false).as('hasViolations');
+    
+    cy.checkA11y(
+      null, 
+      { 
+        skipFailures: true,
+      }, 
+      (violations) => {
+        cy.wrap(true).as('hasViolations');
+        // 為新的 violations 加上頁面資訊
+        const violationsWithPage = violations.map(violation => ({
+          ...violation,
+          page,
+          testName
+        }));
+        
+        // 使用 task 讀取並合併檔案
+        cy.task('readAndMergeJson', {
+          page,
+          filePath: a11yReportFilePath,
+          newData: violationsWithPage
+        });
+      }
+    ).then(() => {
+      // 檢查是否有 violations，如果沒有也要記錄該頁面（空陣列）
+      cy.get('@hasViolations').then((hasViolations) => {
+        if (!hasViolations) {
+          cy.task('readAndMergeJson', {
+            page,
+            filePath: a11yReportFilePath,
+            newData: []
+          });
+        }
+      });
+    });
+  });
+
+  it('組織架構', () => {
+    const page = "/aboutus/organization/620";
     const testName = Cypress.currentTest.title;
     
     cy.visit(encodeURI(page));
