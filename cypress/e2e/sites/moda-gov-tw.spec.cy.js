@@ -2,10 +2,11 @@
 /* eslint-env cypress/globals */
 /* eslint-disable jest/valid-expect, no-unused-expressions */
 
+const parseUrlToSafeNames = require('../../utils/a11y/parse-url-to-safe-names');
+
 describe("Moda Gov A11y", () => {
-  const baseUrl = Cypress.config('baseUrl')
-  const hostname = new URL(baseUrl).hostname
-  const safeHostname = hostname.replace(/\./g, '-')
+
+  const { safeReportFilePathName } = parseUrlToSafeNames(Cypress.config('baseUrl'));
 
   // 產生 yyyy-mm-dd_HH-MM-ss 格式的 timestamp (台北時間 UTC+8)
   const date = new Date();
@@ -25,7 +26,7 @@ describe("Moda Gov A11y", () => {
   const hour = parts.find(p => p.type === 'hour').value;
   const minute = parts.find(p => p.type === 'minute').value;
   const timestamp = `${year}${month}${day}${hour}${minute}`;
-  const a11yReportFilePath = `cypress/reports/${safeHostname}/${timestamp}.json`;
+  const a11yReportFilePath = `cypress/reports/${safeReportFilePathName}/${timestamp}.json`;
 
   it('首頁', () => {
     const page = "/";

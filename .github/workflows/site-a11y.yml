@@ -21,6 +21,7 @@ on:
         type: choice
         options:
           - 'https://moda.gov.tw'
+          - 'https://if540.github.io/accessibility-testing-with-cypress/react-app'
       spec_file:
         description: '測試檔案(可空，預設為 {base_url}.spec.cy.js, 例如：https://moda.gov.tw → moda-gov-tw.spec.cy.js)'
         required: false
@@ -41,7 +42,7 @@ jobs:
           if [ -n "${{ github.event.inputs.spec_file }}" ]; then
             echo "spec_file=${{ github.event.inputs.spec_file }}" >> $GITHUB_ENV
           elif [ -n "${{ github.event.inputs.base_url }}" ]; then
-            SPEC_FILE=$(echo "${{ github.event.inputs.base_url }}" | sed 's|https\?://||' | sed 's|\.|-|g' | sed 's|$|.spec.cy.js|')
+            SPEC_FILE=$(echo "${{ github.event.inputs.base_url }}" | sed 's|https\?://||' | sed 's|:|---|g' | sed 's|\.|-|g' | sed 's|/|--|g' | sed 's|$|.spec.cy.js|')
             echo "spec_file=${SPEC_FILE}" >> $GITHUB_ENV
           fi
 
