@@ -86,7 +86,7 @@ jobs:
 
       # 3️⃣ 開始執行 Cypress + Axe 測試(使用 headless 模式)
       - name: Run Accessibility Tests
-        run: pnpm exec cross-env CYPRESS_BASE_URL=${{ env.base_url }}/ cypress run --spec 'cypress/e2e/sites/**/${{ env.spec_file }}' --headless
+        run: pnpm exec cross-env CYPRESS_BASE_URL=${{ env.base_url }} cypress run --spec 'cypress/e2e/sites/**/${{ env.spec_file }}' --headless
         continue-on-error: true
 
       # 4️⃣ 部署 Cypress report 到 gh-pages/a11y-reports
