@@ -1,17 +1,13 @@
 const { defineConfig } = require('cypress')
+const parseUrlToSafeNames = require('./cypress/utils/a11y/parse-url-to-safe-names');
 
 const defaultBaseUrl = 'http://localhost:3000';
 
-function generateReportFilename() {
-  const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl
-  
-  // 提取主機名
-  const hostname = new URL(baseUrl).hostname
-  
-  // 將點號替換為短橫線
-  const safeHostname = hostname.replace(/\./g, '-')
-  
-  // 產生台北時間的時間戳記 (UTC+8)
+/**
+ * 產生台北時間的時間戳記 (UTC+8)
+ * @returns {Object} 包含不同格式的時間戳記物件
+ */
+function getTaipeiTimestamp() {
   const date = new Date();
   const formatter = new Intl.DateTimeFormat('en-US', {
     timeZone: 'Asia/Taipei',
@@ -20,7 +16,6 @@ function generateReportFilename() {
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit',
     hour12: false
   });
   const parts = formatter.formatToParts(date);
@@ -29,25 +24,40 @@ function generateReportFilename() {
   const day = parts.find(p => p.type === 'day').value;
   const hour = parts.find(p => p.type === 'hour').value;
   const minute = parts.find(p => p.type === 'minute').value;
-  // const second = parts.find(p => p.type === 'second').value;
-  const timestamp = `${year}${month}${day}${hour}${minute}`;
+  
+  return {
+    year,
+    month,
+    day,
+    hour,
+    minute,
+    // 無分隔符格式：用於檔案名
+    compact: `${year}${month}${day}${hour}${minute}`,
+    // 有分隔符格式：用於 id
+    withSeparator: `${year}-${month}-${day}_${hour}-${minute}`,
+    // lastRun 格式
+    lastRun: `${year}-${month}-${day} ${hour}:${minute}:00`
+  };
+}
+
+function generateReportFilename() {
+  const { safeHostname } = parseUrlToSafeNames(undefined, defaultBaseUrl);
+  
+  // 產生台北時間的時間戳記 (UTC+8)
+  const timestamp = getTaipeiTimestamp().compact;
   
   return `accessibility-report-${safeHostname}-${timestamp}`
 }
 
+
 function generateScreenshotsDir() {
-  const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl
-  
-  // 提取主機名
-  const hostname = new URL(baseUrl).hostname
-  
-  // 將點號替換為短橫線
-  const safeHostname = hostname.replace(/\./g, '-')
+  const { safeHostname } = parseUrlToSafeNames(undefined, defaultBaseUrl);
   
   // screenshots 只用來暫存用，並非報告依存
   // 報告裡會直接採用 base64 格式嵌入
   return `cypress/screenshots/${safeHostname}`
 }
+
 module.exports = defineConfig({
   e2e: {
     baseUrl: process.env.CYPRESS_BASE_URL || defaultBaseUrl,
@@ -72,35 +82,19 @@ module.exports = defineConfig({
           const fullPath = path.join(process.cwd(), filePath);
           const dbJsonPath = path.join(process.cwd(), 'public/data/db.json');
 
-          // 從 filePath 提取域名和時間戳
-          const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl;
-          const hostname = new URL(baseUrl).hostname;
-          const safeHostname = hostname.replace(/\./g, '-');
+          const { baseUrl, safeHostname, safeReportFilePathName } = parseUrlToSafeNames(undefined, defaultBaseUrl);
           
-          // 產生時間戳 (台北時間 UTC+8)
-          const date = new Date();
-          const formatter = new Intl.DateTimeFormat('en-US', {
-            timeZone: 'Asia/Taipei',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-          });
-          const parts = formatter.formatToParts(date);
-          const year = parts.find(p => p.type === 'year').value;
-          const month = parts.find(p => p.type === 'month').value;
-          const day = parts.find(p => p.type === 'day').value;
-          const hour = parts.find(p => p.type === 'hour').value;
-          const minute = parts.find(p => p.type === 'minute').value;
-          const timestamp = `${year}-${month}-${day}_${hour}-${minute}`;
-          const lastRun = `${year}-${month}-${day} ${hour}:${minute}:00`;
+          const timestampData = getTaipeiTimestamp();
+          const timestamp = timestampData.withSeparator;
+          const lastRun = timestampData.lastRun;
           
           try {
             // 嘗試讀取現有檔案
             let existingData = {
+              id: timestamp,
+              siteUrl: baseUrl,
               domainName: safeHostname,
+              reportFilePath: safeReportFilePathName,
               lastRun: lastRun,
               pages: {}
             };
@@ -175,7 +169,10 @@ module.exports = defineConfig({
 
             // 清理資料，確保只保留 domainName、lastRun 和 pages 三個屬性
             const cleanedData = {
+              id: existingData.id || "",
+              siteUrl: existingData.siteUrl || "",
               domainName: existingData.domainName || "",
+              reportFilePath: existingData.reportFilePath || "",
               lastRun: existingData.lastRun || "",
               pages: existingData.pages || {}
             };
@@ -223,10 +220,13 @@ module.exports = defineConfig({
             const reportId = reportUrl.replace(/^.*\//, '').replace(/\.json$/, '');
             
             // 查找或創建對應的域名記錄
-            let domainEntry = dbData.find(entry => entry.domainName === safeHostname);
+            let domainEntry = dbData.find(entry => entry.reportFilePath === safeReportFilePathName);
             if (!domainEntry) {
               domainEntry = {
+                id: timestamp,
                 domainName: safeHostname,
+                reportFilePath: safeReportFilePathName,
+                siteUrl: baseUrl,
                 lastRun: lastRun,
                 critical: 0,
                 serious: 0,
@@ -294,6 +294,8 @@ module.exports = defineConfig({
               // 如果報告不存在，添加新記錄
               domainEntry.reports.push({
                 id: reportId,
+                siteUrl: baseUrl,
+                reportFilePath: safeReportFilePathName,
                 critical: reportCounts.critical,
                 serious: reportCounts.serious,
                 moderate: reportCounts.moderate,
@@ -311,31 +313,18 @@ module.exports = defineConfig({
             // 讀取失敗，將新資料轉換成新格式
             console.error('讀取檔案失敗:', error);
             
-            const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl;
-            const hostname = new URL(baseUrl).hostname;
-            const safeHostname = hostname.replace(/\./g, '-');
+            const { baseUrl, safeHostname, safeReportFilePathName } = parseUrlToSafeNames(undefined, defaultBaseUrl);
             
             // 產生時間戳 (台北時間 UTC+8)
-            const date = new Date();
-            const formatter = new Intl.DateTimeFormat('en-US', {
-              timeZone: 'Asia/Taipei',
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: false
-            });
-            const parts = formatter.formatToParts(date);
-            const year = parts.find(p => p.type === 'year').value;
-            const month = parts.find(p => p.type === 'month').value;
-            const day = parts.find(p => p.type === 'day').value;
-            const hour = parts.find(p => p.type === 'hour').value;
-            const minute = parts.find(p => p.type === 'minute').value;
-            const lastRun = `${year}-${month}-${day} ${hour}:${minute}:00`;
+            const timestampData = getTaipeiTimestamp();
+            const timestamp = timestampData.withSeparator;
+            const lastRun = timestampData.lastRun;
             
             const result = {
+              id: timestamp,
               domainName: safeHostname,
+              reportFilePath: safeReportFilePathName,
+              siteUrl: baseUrl,
               lastRun: lastRun,
               pages: {}
             };
