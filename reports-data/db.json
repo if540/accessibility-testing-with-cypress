@@ -46,5 +46,29 @@
                 "filePath": "/if540-github-io-accessibility-testing-with-cypress-react-app/202511251925.json"
             }
         ]
+    },
+    {
+        "id": "2025-11-28_21-45",
+        "domainName": "cabcy-chiayi-gov-tw",
+        "reportFilePath": "cabcy-chiayi-gov-tw",
+        "siteUrl": "https://cabcy.chiayi.gov.tw",
+        "lastRun": "2025-11-28 21:45:00",
+        "critical": 4,
+        "serious": 4,
+        "moderate": 15,
+        "minor": 0,
+        "reports": [
+            {
+                "id": "202511282144",
+                "siteUrl": "https://cabcy.chiayi.gov.tw",
+                "reportFilePath": "cabcy-chiayi-gov-tw",
+                "critical": 4,
+                "serious": 4,
+                "moderate": 15,
+                "minor": 0,
+                "lastRun": "2025-11-28 21:45:00",
+                "filePath": "/cabcy-chiayi-gov-tw/202511282144.json"
+            }
+        ]
     }
 ]
